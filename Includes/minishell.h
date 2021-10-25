@@ -34,6 +34,8 @@
 # define DR_RDR 4
 # define DL_RDR 5
 
+extern int sh_exit;
+
 typedef struct	s_line_element
 {
 	char	*text;

@@ -12,7 +12,40 @@
 
 #include "minishell.h"
 
-int	do_exit(void)
+static int	is_digits(char *str)
 {
-	exit(0);
+	if (str[0] == '-')
+		str++;
+	while (*str)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int	do_exit(char **arr)
+{
+	int nb;
+
+	nb = 1;
+	while (arr[nb])
+		nb++;
+	if (nb == 1)
+		exit(sh_exit);
+	if (nb == 2)
+		exit(ft_atoi(arr[1]));
+	if (nb > 2)
+	{
+		if (is_digits(arr[1]))
+		{
+			printf("%s", "exit: too many arguments\n");
+			sh_exit = 1;
+			return (1);
+		}
+		else
+			exit(0);
+	}
+	return (0);
 }

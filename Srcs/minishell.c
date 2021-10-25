@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int sh_exit = 0;
+
 void	signal_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -45,7 +47,7 @@ int	main(int ac, char **av, char **penv)
 	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
-		line = readline("sh: ");
+		line = readline("\x1b[1;30;43msh: \x1b[0m");
 		if (ft_strlen(line) > 0)
 		{
 			add_history(line);

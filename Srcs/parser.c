@@ -126,7 +126,7 @@ int	do_builtins(char **arr, char ***env)
 	else if (!ft_memcmp(arr[0], "env", 4))
 		res = do_env(*env);
 	else if (!ft_memcmp(arr[0], "exit", 5))
-		res = do_exit();
+		res = do_exit(arr);
 	else if (!ft_memcmp(arr[0], "export", 7))
 		res = do_export(words, env);
 	else if (!ft_memcmp(arr[0], "pwd", 4))
