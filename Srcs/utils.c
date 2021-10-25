@@ -6,12 +6,24 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 20:56:23 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/24 23:42:20 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 00:36:45 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+void	free_list(t_list *lst)
+{
+	t_list	*next;
+
+	while (lst)
+	{
+		next = lst->next;
+		free(lst);
+		lst = next;
+	}
+}
 
 char	*ft_strchrq(const char *s, int ch)
 {

@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 char	*take_file(char *redir_p, char *endfile_p)
 {
 	char	*file;

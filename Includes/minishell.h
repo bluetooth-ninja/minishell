@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/24 22:04:50 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 01:19:33 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,14 @@ char		**space_split(char const *s);
 int	parse_com(char *line, char ***env);
 char	*substr_word(char *str, const char *delims);
 void	free_array(char **arr);
+int			parse_redir(char *str, char ***env);
+int 		do_redirects(int type, char *file, char *str, char ***env);
+int			do_command(char *str, char ***env);
+int	do_builtins(char **arr, char ***env);
+int	is_builtin(char *line);
+int	do_pipes(t_command *cur, t_command *next, char ***env);
+int	do_hast_quotes(char **str, char **env);
+int	cut_file(char **str, char **file, int type);
+void	free_list(t_list *lst);
 
 #endif
