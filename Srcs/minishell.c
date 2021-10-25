@@ -23,10 +23,6 @@ void	signal_handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (signum == SIGQUIT)
-	{
-		//write(1, "   \b\b", 8);
-	}
 }
 
 int	main(int ac, char **av, char **penv)
@@ -48,6 +44,8 @@ int	main(int ac, char **av, char **penv)
 	while (1)
 	{
 		line = readline("\x1b[1;30;43msh: \x1b[0m");
+		if (line == NULL)
+			exit(0);
 		if (ft_strlen(line) > 0)
 		{
 			add_history(line);
