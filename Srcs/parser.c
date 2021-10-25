@@ -14,29 +14,23 @@
 
 int	find_type(char *str)
 {
-	int	i;
-	int	type;
+	char	*tmp;
 
-	type = 0;
-	i = -1;
-	while(str[++i])
-	{
-		if (str[i] == '>')
-		{
-			if (type < 0)
-				return ('>');
-			type++;
-		}
-		else if (str[i] == '<')
-		{
-			if (type > 0)
-				return ('<');
-			type--;
-		}
-		if (type && str[i] != '<' && str[i] != '>')
-			break;
-	}
-	return (type);
+	tmp = ft_strchrq(str, '<');
+	str = ft_strchrq(str, '>');
+	if ((tmp < str && tmp) || !str)
+		str = tmp;
+	if (str[0] == '>' && str[1] != '<' && str[1] != '>')
+		return (1);
+	if (str[0] == '<' && str[1] != '<' && str[1] != '>')
+		return (-1);
+	if (!str[1])
+		return (0);
+	if (str[0] == '>' && str[1] == '>' && str[2] != '<' && str[2] != '>')
+		return (2);
+	if (str[0] == '<' && str[1] == '<' && str[2] != '<' && str[2] != '>')
+		return (-2);
+	return (0);
 }
 
 int	cut_file(char **str, char **file)
@@ -49,10 +43,8 @@ int	cut_file(char **str, char **file)
 	tmp = *str;
 	while (*tmp != '>' && *tmp != '<')
 		tmp++;
-	while (*tmp == '>' || *tmp == '<')
-		tmp++;
 	len = ft_strlen(*str);
-	*file = substr_word(tmp, " \t|<>");
+	*file = ft_strtrim(tmp, " \t|<>");
 	tmp = *str;
 	*str = (char *)malloc(sizeof(char) * (len - ft_strlen(*file)));
 	tmpp = tmp;
@@ -77,7 +69,7 @@ int	do_redir(char *str, char ***env)
 
 	(void)env;
 	type = find_type(str);
-	if (!type || type != '<' || type != '>')
+	if (!type)
 	{
 		//error
 		return (-1);
@@ -286,9 +278,9 @@ int	do_command(char *str, char ***env)
 	char	**arr;
 	int 	res;
 
-	res = do_hast_quotes(&str, *env);
-	if (ft_strchr(str, '>') || ft_strchr(str, '<'))
+	if (ft_strchrq(str, '>') || ft_strchrq(str, '<'))
 		return (do_redir(str, env));
+	res = do_hast_quotes(&str, *env);
 	arr = space_split(str);
 	if (!arr)
 		return (-1);
@@ -391,11 +383,11 @@ static t_list	*pipe_split(char *line)
 	{
 		if (line[i] == '\'' && !is_q)
 			is_q = 1;
-		if (line[i] == '\"' && !is_q)
+		else if (line[i] == '\"' && !is_q)
 			is_q = 2;
-		if ((line[i] == '\'' && is_q == 1) || (line[i] == '\"' && is_q == 2))
+		else if ((line[i] == '\'' && is_q == 1) || (line[i] == '\"' && is_q == 2))
 			is_q = 0;
-		if (line[i] == '|' && !is_q)
+		else if (line[i] == '|' && !is_q)
 		{
 			add_commands(&commands, &line[start], i - start);
 			start = i + 1;

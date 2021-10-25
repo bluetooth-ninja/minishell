@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../Libft/libft.h"
+# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -75,6 +75,7 @@ int		do_unset(t_list *line_element, char ***env);	// Нет проверки н�
 int		do_env(char **env);
 int		exit_shell();									// Будет использоваться при всяком завершении работы. Нужно передавать все для очистки если будем чистить
 
+char		*ft_strchrq(const char *s, int ch);
 int			env_cpy(char ***my_env, char **env);
 int			add_env(const char *new_env_var, char ***env);
 int			remove_var(const char *var, char ***env);

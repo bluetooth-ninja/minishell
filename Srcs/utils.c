@@ -13,6 +13,30 @@
 #include "libft.h"
 #include "minishell.h"
 
+char	*ft_strchrq(const char *s, int ch)
+{
+	char	*s1;
+	int		is_q;
+
+	is_q = 0;
+	s1 = (char *)s;
+	while (*s1)
+	{
+		if (*s1 == '\'' && !is_q)
+			is_q = 1;
+		else if (*s1 == '\"' && !is_q)
+			is_q = 2;
+		else if (*s1 == '\'' || *s1 == '\"')
+			is_q = 0;
+		else if (*s1 == ch && !is_q)
+			return (s1);
+		s1++;
+	}
+	if (*s1 == '\0' && ch == '\0')
+		return (s1);
+	return (NULL);
+}
+
 int	env_cpy(char ***my_env, char **env)
 {
 	int	i;
@@ -47,6 +71,7 @@ void	free_array(char **arr)
 	arr = NULL;
 }
 
+/*
 char	*substr_word(char *str, const char *delims)
 {
 	char	*word;
@@ -67,3 +92,4 @@ char	*substr_word(char *str, const char *delims)
 	}
 	return (word);
 }
+*/

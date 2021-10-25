@@ -68,12 +68,15 @@ static char	**ft_split_array(char const *s, int w_count, char **arr)
 		arr[i] = (char *)malloc(sizeof(char) * (w_len + 1));
 		if (!arr[i])
 			return (ft_empty_arr(arr, i));
-		k = 0;
-		while (k < w_len)
+		k = -1;
+		while (++k < w_len)
+		{
 			if (*s == 1)
-				arr[i][k++] = ' ';
+				arr[i][k] = ' ';
 			else
-				arr[i][k++] = *s++;
+				arr[i][k] = *s;
+			s++;
+		}
 		arr[i][k] = '\0';
 		i++;
 	}
