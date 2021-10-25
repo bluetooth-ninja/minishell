@@ -15,7 +15,7 @@
 int	find_path(char **path, char **env)
 {
 	int			i;
-	char	    *temp;
+	char		*temp;
 	char		*new_path;
 	char		**paths;
 	struct stat	s;
@@ -109,8 +109,8 @@ static t_list	*pipe_split(char *line)
 
 	start = 0;
 	i = 0;
-    commands = 0;
-    is_q = 0;
+	commands = 0;
+	is_q = 0;
 	while (line[i])
 	{
 		if (line[i] == '\'' && !is_q)

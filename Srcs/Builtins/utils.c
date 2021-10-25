@@ -81,7 +81,6 @@ int	change_env_var(const char *new_var, char ***env)
 
 	cur_var = 0;
 	cur_var = search_env(new_var, *env);
-	printf("%p\n", cur_var);
 	if (cur_var)
 	{
 		free(*cur_var);

@@ -66,15 +66,15 @@ static int do_double_right_redirect(char *file, char *str, char ***env)
 int do_double_left_redirect(char *file, char *str, char ***env)
 {
 	(void)file;
-    (void)str;
-    (void)env;
-    return (0);
+	(void)str;
+	(void)env;
+	return (0);
 }
 
 int do_redirects(int type, char *file, char *str, char ***env)
 {
 	int	res;
-	int status;
+	int	status;
     
 	res = 0;
     if (fork() == 0)

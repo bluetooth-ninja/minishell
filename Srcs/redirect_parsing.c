@@ -37,8 +37,9 @@ int	parse_redir(char *str, char ***env)
 {
 	int		type;
 	char	*file;
-	int 	res = 0;
+	int		res;
 
+	res = 0;
 	(void)env;
 	type = find_type(str);
 	if (!type)
