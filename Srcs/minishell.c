@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/27 17:06:31 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/28 00:29:39 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int ac, char **av, char **penv)
 	signal(SIGQUIT, signal_handler);
 	while (1)
 	{
-		line = readline("\x1b[1;30;43m>_<:\x1b[0m ");
+		line = readline("\x1b[1;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
 		if (line == NULL)
 			exit(sh_exit);
 		if (ft_strlen(line) > 0)

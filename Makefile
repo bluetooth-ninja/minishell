@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+         #
+#    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 16:22:11 by wgaunt            #+#    #+#              #
-#    Updated: 2021/10/26 14:12:16 by wgaunt           ###   ########.fr        #
+#    Updated: 2021/10/28 00:21:44 by vlucilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RLFLAGS	= -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.br
 CC		= gcc
 
 $(NAME): $(SRC) $(LIBFT)
-	@$(CC) $(FLAGS) $(RLFLAGS) -I$(INCLUDE) $(SRC) -I$(LIBFTPATH) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) -I$(INCLUDE) $(SRC) -lreadline -I$(LIBFTPATH) $(LIBFT) -o $(NAME)
 	@printf "\e[37;5;44m              MINISHELL IS READY                \e[0m\n"
 	@printf "\e[30;5;42m                    Enjoy🤗                     \e[0m\n"
 
