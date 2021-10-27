@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:34:55 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/26 00:36:10 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 15:41:29 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	is_builtin(char *line)
 {
-	if (!ft_memcmp(line, "echo", 5) || !ft_memcmp(line, "cd", 3) ||
-		!ft_memcmp(line, "env", 4) || !ft_memcmp(line, "exit", 5) ||
-		!ft_memcmp(line, "export", 7) || !ft_memcmp(line, "pwd", 4) ||
-		!ft_memcmp(line, "unset", 6))
+	if (!ft_memcmp(line, "echo", 5) || !ft_memcmp(line, "cd", 3)
+		|| !ft_memcmp(line, "env", 4) || !ft_memcmp(line, "exit", 5)
+		|| !ft_memcmp(line, "export", 7) || !ft_memcmp(line, "pwd", 4)
+		|| !ft_memcmp(line, "unset", 6))
 		return (1);
 	return (0);
 }

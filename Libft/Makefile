@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/18 04:46:05 by vlucilla          #+#    #+#              #
-#    Updated: 2020/11/20 15:02:31 by vlucilla         ###   ########.fr        #
+#    Updated: 2021/10/26 14:12:31 by wgaunt           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ all:				$(NAME)
 
 $(NAME):			$(OBJS)
 				@ar rcs $(NAME) $(OBJS)
-				@printf "\e[37;5;41m               Libft is compiling...            \e[0m\n"
+				@printf "\e[37;5;41m             Libft is compiling...              \e[0m\n"
 
 clean:
 				@$(RM) $(OBJS)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 16:22:11 by wgaunt            #+#    #+#              #
-#    Updated: 2021/10/26 01:19:05 by vlucilla         ###   ########.fr        #
+#    Updated: 2021/10/26 14:12:16 by wgaunt           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RLFLAGS	= -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.br
 CC		= gcc
 
 $(NAME): $(SRC) $(LIBFT)
-	@$(CC) $(FLAGS) -I$(INCLUDE) $(SRC) -lreadline -I$(LIBFTPATH) $(LIBFT) -o $(NAME)
+	@$(CC) $(FLAGS) $(RLFLAGS) -I$(INCLUDE) $(SRC) -I$(LIBFTPATH) $(LIBFT) -o $(NAME)
 	@printf "\e[37;5;44m              MINISHELL IS READY                \e[0m\n"
 	@printf "\e[30;5;42m                    Enjoy🤗                     \e[0m\n"
 
@@ -35,17 +35,17 @@ all: $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFTPATH)
-	@printf "\e[37;5;45m               Libft is ready✅                  \e[0m\n"
+	@printf "\e[37;5;45m               Libft is ready✅                 \e[0m\n"
 
 .PHONY: clean
 clean:
 	@make fclean -C $(LIBFTPATH)
-	@printf "\e[30;5;47m                Clean done.🧹                   \e[0m\n"
+	@printf "\e[30;5;47m                 Clean done.🧹                  \e[0m\n"
 
 .PHONY: fclean
 fclean: clean
 	@rm -f $(NAME)
-	@printf "\e[30;5;42m                Fclean done.🧹                  \e[0m\n"
+	@printf "\e[30;5;42m                 Fclean done.🧹                 \e[0m\n"
 
 .PHONY: re
 re: fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 20:19:47 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/26 00:52:27 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 15:42:33 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,3 @@ int	parse_redir(char *str, char ***env)
 	res = do_redirects(type, file, str, env);
 	return (res);
 }
-
-

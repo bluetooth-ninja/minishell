@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 00:43:54 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 19:09:00 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	do_command(char *str, char ***env)
 	if (ft_strchrq(str, '>') || ft_strchrq(str, '<'))
 		return (parse_redir(str, env));
 	res = do_hast_quotes(&str, *env);
+	if (res)
+	{
+		ft_putendl_fd("minishell: syntax error: wrong number of quotes", 2);
+		return (res);
+	}
 	arr = space_split(str);
 	if (!arr)
 		return (-1);
@@ -60,6 +65,7 @@ int	do_command(char *str, char ***env)
 		{
             res = find_path(&arr[0], *env);
 			res = execve(arr[0], arr, *env);
+			exit(res);
 		}
 		wait(&res);
 	}
@@ -135,6 +141,10 @@ int	parse_com(char *line, char ***env)
 	int		res;
 	t_list	*commands;
 
+	while (*line == ' ')
+		line++;
+	if (!(*line))
+		return (0);
 	res = 0;
 	commands = 0;
 	commands = pipe_split(line);

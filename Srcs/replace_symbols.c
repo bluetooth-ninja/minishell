@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   replace_symbols.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:33:15 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/26 00:33:58 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/26 14:16:54 by wgaunt           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//int	find_name(char *str, char **name)
 
 int	replace_variables(char **str, char **env, int is_q)
 {
