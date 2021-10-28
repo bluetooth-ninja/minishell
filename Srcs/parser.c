@@ -60,7 +60,7 @@ int	do_command(char *str, char ***env)
 	{
 		if (fork() == 0)
 		{
-            res = find_path(&arr[0], *env);
+			res = find_path(&arr[0], *env);
 			res = execve(arr[0], arr, *env);
 			exit(res);
 		}

@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/28 00:29:39 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/28 03:06:58 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,33 @@ int sh_exit = 0;
 
 void	signal_handler(int signum)
 {
+	pid_t	pid;
+	int	res;
+    
+	pid = waitpid(-1, &res, WNOHANG);
 	if (signum == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (pid == -1)
+		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else
+			write(1, "\n", 1);
+	}
+	if (signum == SIGQUIT)
+	{
+		if (pid != -1)
+			write(1, "Quit\n", 5);
 	}
 }
 
 int	main(int ac, char **av, char **penv)
 {
 	char	*line;
-	int		res;
+	int	res;
 	char	***env;
 
 	line = NULL;
