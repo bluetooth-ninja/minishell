@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int		ft_words_count(char const *s, char c)
+static int	ft_words_count(char const *s, char c)
 {
 	int	res;
 	int	i;
@@ -28,7 +28,7 @@ static int		ft_words_count(char const *s, char c)
 	return (res);
 }
 
-static int		ft_chars_count(char const *s, char c)
+static int	ft_chars_count(char const *s, char c)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static int		ft_chars_count(char const *s, char c)
 	return (i);
 }
 
-static void		*ft_empty_arr(char **arr, int n)
+static void	*ft_empty_arr(char **arr, int n)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ static void		*ft_empty_arr(char **arr, int n)
 	return (NULL);
 }
 
-static char		**ft_split_array(char const *s, char c, int w_count, char **arr)
+static char	**ft_split_array(char const *s, char c, int w_count, char **arr)
 {
 	int	i;
 	int	w_len;
@@ -77,7 +77,7 @@ static char		**ft_split_array(char const *s, char c, int w_count, char **arr)
 	return (arr);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**arr;
 	int		len;
@@ -85,7 +85,7 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	len = ft_words_count(s, c);
-	arr = (char **)malloc(sizeof(char*) * (len + 1));
+	arr = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!arr)
 		return (NULL);
 	arr = ft_split_array(s, c, len, arr);

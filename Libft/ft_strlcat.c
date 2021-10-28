@@ -31,7 +31,7 @@ static char	*ft_strncat(char *dest, const char *src, int nb)
 	return (dest);
 }
 
-size_t		ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	size_t	s_len;
 	size_t	d_len;
@@ -39,6 +39,9 @@ size_t		ft_strlcat(char *dest, const char *src, size_t size)
 	s_len = ft_strlen(src);
 	d_len = ft_strlen(dest);
 	if (size > d_len)
-		ft_strncat(dest, (char*)src, size - d_len - 1);
-	return (d_len <= size ? d_len + s_len : size + s_len);
+		ft_strncat(dest, (char *)src, size - d_len - 1);
+	if (d_len <= size)
+		return (d_len + s_len);
+	else
+		return (size + s_len);
 }

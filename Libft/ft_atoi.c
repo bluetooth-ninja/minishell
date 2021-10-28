@@ -12,13 +12,13 @@
 
 int	ft_atoi(char const *s)
 {
-	int res;
-	int sign;
+	int	res;
+	int	sign;
 
 	res = 0;
 	sign = 1;
-	while (*s == '\t' || *s == '\n' || *s == ' ' || *s == '\v' ||
-			*s == '\r' || *s == '\f')
+	while (*s == '\t' || *s == '\n' || *s == ' ' || *s == '\v'
+		|| *s == '\r' || *s == '\f')
 		s++;
 	if (*s == '-' || *s == '+')
 	{

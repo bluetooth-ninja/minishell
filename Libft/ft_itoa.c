@@ -32,7 +32,7 @@ static int	numb_size(long nb)
 	return (i);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	int		i;

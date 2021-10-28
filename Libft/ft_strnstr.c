@@ -22,13 +22,16 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 		return ((char *)s1);
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	g_len = s1_len > len ? len : s1_len;
+	if (s1_len > len)
+		g_len = len;
+	else
+		g_len = s1_len;
 	if (len < s2_len || s2_len > s1_len)
 		return (NULL);
 	while (g_len-- >= s2_len)
 	{
 		if (ft_strncmp(s1, s2, s2_len) == 0)
-			return (char *)s1;
+			return ((char *)s1);
 		s1++;
 	}
 	return (NULL);
