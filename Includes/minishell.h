@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 13:35:19 by wgaunt           ###   ########.fr       */
+/*   Updated: 2021/10/29 00:55:59 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ int		do_pipes(t_command *cur, t_command *next, char ***env);
 int		do_hast_quotes(char **str, char **env);
 int		cut_file(char **str, char **file, int type);
 void	free_list(t_list *lst);
+char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
+char	*take_value(char *str, char **env, int is_q, int *len);
 
 #endif
