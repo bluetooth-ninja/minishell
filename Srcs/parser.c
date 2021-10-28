@@ -50,10 +50,7 @@ int	do_command(char *str, char ***env)
 		return (parse_redir(str, env));
 	res = do_hast_quotes(&str, *env);
 	if (res)
-	{
-		ft_putendl_fd("minishell: syntax error: wrong number of quotes", 2);
 		return (res);
-	}
 	arr = space_split(str);
 	if (!arr)
 		return (-1);

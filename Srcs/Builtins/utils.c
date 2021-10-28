@@ -13,10 +13,10 @@
 #include <libft.h>
 #include <minishell.h>
 
-const char	*search_env_value(const char *name, const char **env)
+char	*search_env_value(const char *name, const char **env)
 {
-	const char	*res;
-	int			i;
+	char	*res;
+	int		i;
 
 	i = 0;
 	res = 0;
@@ -25,7 +25,7 @@ const char	*search_env_value(const char *name, const char **env)
 	while (env[i] != 0 && !res)
 	{
 		if (!name_strncmp(name, env[i], ft_strlen(name)))
-			res = ft_strchr(env[i], '=') + 1;
+			res = ft_strdup(ft_strchr(env[i], '=') + 1);
 		i++;
 	}
 	if (res == 0)

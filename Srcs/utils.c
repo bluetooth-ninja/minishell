@@ -25,6 +25,17 @@ void	free_list(t_list *lst)
 	}
 }
 
+int	q_error(int res)
+{
+	if (res == -1)
+	{
+		ft_putendl_fd("minishell: Error: Cannt malloc variable", 2);
+		return (-1);
+	}
+	ft_putendl_fd("minishell: Syntax error: Wrong number of quotes", 2);
+	return (-2);
+}
+
 char	*ft_strchrq(const char *s, int ch)
 {
 	char	*s1;
