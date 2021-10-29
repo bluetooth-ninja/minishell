@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 20:13:33 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/29 19:38:05 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 20:03:24 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static char	**ft_split_array(char const *s, int w_count, char **arr)
 		}
 		arr[i][k] = '\0';
 	}
-	arr[i] = 0;
 	return (arr);
 }
 
@@ -95,5 +94,6 @@ char	**space_split(char const *s)
 	if (!arr)
 		return (NULL);
 	arr = ft_split_array(s, len, arr);
+	arr[len] = 0;
 	return (arr);
 }
