@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:13:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/28 00:40:14 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:33:54 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	do_right_redirect(char *file, char *str, char ***env)
 	if (fd < 0)
 	{
 		ft_putendl_fd("minishell: No such file or directory", 2);
-        	sh_exit = 1;
+		g_sh_exit = 1;
 		return (1);
 	}
 	dup2(fd, 1);
@@ -39,7 +39,7 @@ static int	do_left_redirect(char *file, char *str, char ***env)
 	if (fd < 0)
 	{
 		ft_putendl_fd("minishell: No such file or directory", 2);
-        	sh_exit = 1;
+		g_sh_exit = 1;
 		return (1);
 	}
 	dup2(fd, 0);
@@ -57,7 +57,7 @@ static int	do_double_right_redirect(char *file, char *str, char ***env)
 	if (fd < 0)
 	{
 		ft_putendl_fd("minishell: No such file or directory", 2);
-		sh_exit = 1;
+		g_sh_exit = 1;
 		return (1);
 	}
 	dup2(fd, 1);
@@ -69,7 +69,7 @@ static int	do_double_right_redirect(char *file, char *str, char ***env)
 int	do_double_left_redirect(char *file, char *str, char ***env)
 {
 	char	*line;
-	int	res;
+	int		res;
 
 	dup2(0, 1);
 	line = ft_strdup("");
@@ -104,6 +104,6 @@ int	do_redirects(int type, char *file, char *str, char ***env)
 		exit(res);
 	}
 	wait(&status);
-	sh_exit = status / 256;
+	g_sh_exit = status / 256;
 	return (res);
 }

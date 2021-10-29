@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 00:55:59 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:35:34 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERROR_EMPTYPIPE_MSG "minishell: Syntax error near \"|\""
 # define ERROR_QUOTES_MSG "minishell: Not closed quotes founded"
 
-extern int sh_exit;
+extern int g_sh_exit;
 
 typedef struct	s_line_element
 {
@@ -107,5 +107,6 @@ int		cut_file(char **str, char **file, int type);
 void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);
+int	find_path(char **path, char **env);
 
 #endif

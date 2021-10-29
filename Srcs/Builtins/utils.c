@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:06:30 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 18:36:12 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:36:15 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*search_env_value(const char *name, const char **env)
 	i = 0;
 	res = 0;
 	if (!ft_strncmp(name, "?", 2))
-		return (ft_itoa(sh_exit));
+		return (ft_itoa(g_sh_exit));
 	while (env[i] != 0 && !res)
 	{
 		if (!name_strncmp(name, env[i], ft_strlen(name)))

@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 20:19:47 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/28 03:20:42 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:35:57 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static int	find_type(char *str)
 
 int	parse_redir(char *str, char ***env)
 {
-	int	type;
+	int		type;
 	char	*file;
-	int	res;
+	int		res;
 
 	res = 0;
 	(void)env;
@@ -45,7 +45,7 @@ int	parse_redir(char *str, char ***env)
 	if (!type)
 	{
 		ft_putendl_fd("minishell: Syntax error", 2);
-		sh_exit = 1;
+		g_sh_exit = 1;
 		return (-1);
 	}
 	cut_file(&str, &file, type);

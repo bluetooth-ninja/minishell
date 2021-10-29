@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:39 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 16:45:57 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:37:30 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	do_cd(t_list *line_element, char ***env)
 		res = chdir("~");
 	if (res)
 	{
-		ft_putendl_fd("cd: No such file or directory", 2);
-		sh_exit = 1;
+		ft_putendl_fd("minishell: cd: No such file or directory", 2);
+		g_sh_exit = 1;
 		return (1);
 	}
 	res = change_env_var(ft_strjoin("OLDPWD=", tmp), env);

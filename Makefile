@@ -6,13 +6,13 @@
 #    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 16:22:11 by wgaunt            #+#    #+#              #
-#    Updated: 2021/10/29 00:56:23 by vlucilla         ###   ########.fr        #
+#    Updated: 2021/10/29 19:08:03 by vlucilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	minishell
 
-SRC =	Srcs/parser.c Srcs/redirect_parsing.c Srcs/redirects.c Srcs/pipes.c Srcs/do_builtin.c Srcs/clear.c \
+SRC =	Srcs/parser.c Srcs/redirect_parsing.c Srcs/redirects.c Srcs/pipes.c Srcs/do_builtin.c Srcs/clear.c Srcs/find_path.c \
 		Srcs/replace_symbols.c Srcs/replace_symbols2.c Srcs/cut_file.c Srcs/space_split.c Srcs/utils.c Srcs/Builtins/utils.c \
 		Srcs/minishell.c Srcs/Builtins/utils2.c Srcs/Builtins/cd.c Srcs/Builtins/echo.c Srcs/Builtins/env.c \
 		Srcs/Builtins/exit.c Srcs/Builtins/export.c Srcs/Builtins/pwd.c Srcs/Builtins/unset.c

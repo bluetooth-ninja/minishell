@@ -24,7 +24,6 @@ void	free_list(t_list *lst)
 	}
 }
 
-
 void	free_array(char **arr)
 {
 	int	i;
@@ -41,9 +40,9 @@ void	free_array(char **arr)
 
 void	t_command_clear(void *v_elem)
 {
-    t_command   *elem;
+	t_command	*elem;
 
-    elem = (t_command *)v_elem;
+	elem = (t_command *)v_elem;
 	free(elem->text);
 	free(elem);
 }

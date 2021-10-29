@@ -6,13 +6,13 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/28 03:06:58 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:36:34 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int sh_exit = 0;
+int	g_sh_exit = 0;
 
 void	signal_handler(int signum)
 {
@@ -49,7 +49,7 @@ static int	read_lines(char ***env)
 	{
 		line = readline("\x1b[1;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
 		if (line == NULL)
-			exit(sh_exit);
+			exit(g_sh_exit);
 		if (ft_strlen(line) > 0)
 		{
 			add_history(line);

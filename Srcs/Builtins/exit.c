@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 16:24:09 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:36:53 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ int	do_exit(char **arr)
 	while (arr[nb])
 		nb++;
 	if (nb == 1)
-		exit(sh_exit);
+		exit(g_sh_exit);
 	if (nb == 2 && is_digits(arr[1]))
 		exit(ft_atoi(arr[1]));
 	if (nb >= 2 && !is_digits(arr[1]))
 	{
 		ft_putendl_fd("exit: numeric argument required", 2);
-		sh_exit = 255;
-		exit(sh_exit);
+		g_sh_exit = 255;
+		exit(g_sh_exit);
 	}
 	if (nb > 2)
 	{
 		if (is_digits(arr[1]))
 		{
 			printf("%s", "exit: too many arguments\n");
-			sh_exit = 1;
+			g_sh_exit = 1;
 			return (1);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 20:13:33 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/24 17:59:07 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 19:38:05 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static char	**ft_split_array(char const *s, int w_count, char **arr)
 	int	w_len;
 	int	k;
 
-	i = 0;
-	while (i < w_count)
+	i = -1;
+	while (++i < w_count)
 	{
 		while (*s == ' ' || *s == '\t')
 			s++;
@@ -78,7 +78,6 @@ static char	**ft_split_array(char const *s, int w_count, char **arr)
 			s++;
 		}
 		arr[i][k] = '\0';
-		i++;
 	}
 	arr[i] = 0;
 	return (arr);
