@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 19:09:00 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 17:28:11 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,18 @@ static int	find_path(char **path, char **env)
 static void	execution(char **arr, char **env)
 {
 	int		res;
-	char	*err;
 
 	res = find_path(arr, env);
 	if (res == ERROR_MALLOC_CODE)
 		exit(res);
-	execve(arr[0], arr, env);
-	err = strerror(errno);
-	ft_putstr_fd("minishell: ", 2);
-	ft_putendl_fd(err, 2);
-	exit(0);
+	res = execve(arr[0], arr, env);
+    if (res == -1)
+    {
+        ft_putstr_fd("minishell: ", 2);
+        ft_putstr_fd(arr[0], 2);
+        ft_putendl_fd(": command not found", 2);
+    }
+	exit(res);
 }
 
 int	do_command(char *str, char ***env)
