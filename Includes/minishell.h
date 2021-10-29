@@ -37,6 +37,7 @@
 # define ERROR_MALLOC_MSG "minishell: Cannt create variable: Not enougth free memory"
 # define ERROR_MALLOC_CODE -1
 # define ERROR_EMPTYPIPE_MSG "minishell: Syntax error near \"|\""
+# define ERROR_QUOTES_MSG "minishell: Not closed quotes founded"
 
 extern int sh_exit;
 
@@ -79,6 +80,7 @@ int		do_unset(t_list *line_element, char ***env);	// Нет проверки н�
 int		do_env(char **env);
 int		exit_shell();									// Будет использоваться при всяком завершении работы. Нужно передавать все для очистки если будем чистить
 
+int		error_errno();
 t_list	*pipe_split(char *line);
 void	t_command_clear(void *elem);
 int		q_error(int res);

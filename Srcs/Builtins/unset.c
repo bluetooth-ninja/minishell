@@ -14,19 +14,20 @@
 
 int	do_unset(t_list *line_element, char ***env)
 {
-	int				i;
-	int				res;
+	int	i;
+	int	res;
 
 	res = 0;
 	while (line_element)
 	{
 		i = 0;
-		while (ft_isalnum(((char *)(line_element->content))[i]))
+		while (((char *)(line_element->content))[i] == '_' ||
+				ft_isalnum(((char *)(line_element->content))[i]))
 			i++;
 		if ((unsigned int)i != ft_strlen(line_element->content))
 			res = 1;
 		else if (remove_var(line_element->content, env))
-			return (2);
+			return (ERROR_MALLOC_CODE);
 		line_element = line_element->next;
 	}
 	return (res);

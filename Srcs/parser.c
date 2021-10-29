@@ -80,7 +80,7 @@ int	do_command(char *str, char ***env)
 	if (ft_strchrq(str, '>') || ft_strchrq(str, '<'))
 		return (parse_redir(str, env));
 	res = do_hast_quotes(&str, *env);
-	if (res)
+	if (res == ERROR_MALLOC_CODE)
 		return (ERROR_MALLOC_CODE);
 	arr = space_split(str);
 	if (!arr)

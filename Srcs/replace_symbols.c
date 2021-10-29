@@ -73,7 +73,7 @@ int	quotes_len_plus_var(char **str, char **env)
 			len++;
 	}
 	if (res || !(*str))
-		return (-1);
+		return (ERROR_MALLOC_CODE);
 	if (is_q)
 		return (-2);
 	return (len);
@@ -111,7 +111,9 @@ int	do_hast_quotes(char **str, char **env)
 	int		len;
 
 	len = quotes_len_plus_var(str, env);
-	if (len == -2 || len == -1)
+	if (len == -2)
+		ft_putendl_fd(ERROR_QUOTES_MSG, 2);
+	if (len == -2 || len == ERROR_MALLOC_CODE)
 		return (len);
 	new_str = ft_calloc(len + 1, sizeof(char));
 	if (!new_str)

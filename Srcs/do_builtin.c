@@ -26,27 +26,27 @@ int	do_builtins(char **arr, char ***env)
 {
 	t_list	*words;
 	int		i;
-	int		res;
 
 	i = 0;
-	res = -1;
 	words = 0;
 	while (arr[++i])
 		ft_lstadd_back(&words, ft_lstnew(arr[i]));
 	if (!ft_memcmp(arr[0], "echo", 5))
-		res = do_echo(words);
+		i = do_echo(words);
 	else if (!ft_memcmp(arr[0], "cd", 3))
-		res = do_cd(words, env);
+		i = do_cd(words, env);
 	else if (!ft_memcmp(arr[0], "env", 4))
-		res = do_env(*env);
+		i = do_env(*env);
 	else if (!ft_memcmp(arr[0], "exit", 5))
-		res = do_exit(arr);
+		i = do_exit(arr);
 	else if (!ft_memcmp(arr[0], "export", 7))
-		res = do_export(words, env);
+		i = do_export(words, env);
 	else if (!ft_memcmp(arr[0], "pwd", 4))
-		res = do_pwd();
+		i = do_pwd();
 	else
-		res = do_unset(words, env);
+		i = do_unset(words, env);
 	free_list(words);
-	return (res);
+	if (i == ERROR_MALLOC_CODE)
+		return (i);
+	return (0);
 }

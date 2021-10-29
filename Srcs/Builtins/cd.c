@@ -28,10 +28,14 @@ int	do_cd(t_list *line_element, char ***env)
 		sh_exit = 1;
 		return (1);
 	}
-	change_env_var(ft_strjoin("OLDPWD=", tmp), env);
+	res = change_env_var(ft_strjoin("OLDPWD=", tmp), env);
 	free(tmp);
+	if (res)
+		return (ERROR_MALLOC_CODE);
 	tmp = getcwd(0, 0);
-	change_env_var(ft_strjoin("PWD=", tmp), env);
+	res = change_env_var(ft_strjoin("PWD=", tmp), env);
 	free(tmp);
+	if (res)
+		return (ERROR_MALLOC_CODE);
 	return (0);
 }

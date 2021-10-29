@@ -14,10 +14,16 @@
 
 int	do_export(t_list *line_element, char ***env)
 {
+	int	res;
+
 	while (line_element)
 	{
 		if (ft_strchr(line_element->content, '='))
-			change_env_var(line_element->content, env);
+		{
+			res = change_env_var(line_element->content, env);
+			if (res == ERROR_MALLOC_CODE)
+				return (res);
+		}
 		line_element = line_element->next;
 	}
 	return (0);

@@ -18,5 +18,6 @@ int	do_pwd(void)
 
 	path = getcwd(0, 0);
 	printf("%s\n", path);
+	free(path);
 	return (0);
 }

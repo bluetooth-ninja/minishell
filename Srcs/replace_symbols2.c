@@ -61,13 +61,3 @@ char	*change_name_to_value(char **str, char *new_str, char *value, int is_q)
 	}
 	return (new_str);
 }
-
-void	replace_spaces(char *str)
-{
-	while (*str)
-	{
-		if (*str == 1)
-			*str = ' ';
-		str++;
-	}	
-}

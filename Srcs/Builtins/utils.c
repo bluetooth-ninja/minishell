@@ -52,7 +52,7 @@ int	remove_var(const char *var, char ***env)
 		return (0);
 	new_env = ft_calloc(i, sizeof(char *));
 	if (new_env == 0)
-		return (1);
+		return (ERROR_MALLOC_CODE);
 	i = -1;
 	while ((*env)[++i])
 	{
@@ -76,10 +76,13 @@ int	add_env(const char *new_env_var, char ***env)
 		i++;
 	new_env = ft_calloc(i + 2, sizeof(char *));
 	if (new_env == 0)
-		return (1);
+		return (ERROR_MALLOC_CODE);
 	ft_memcpy(new_env, *env, i * sizeof(char *));
 	*env = new_env;
+	free_array(*env);
 	(*env)[i] = ft_strdup(new_env_var);
+	if (!((*env)[i]))
+		return (ERROR_MALLOC_CODE);
 	return (0);
 }
 
@@ -89,10 +92,14 @@ int	change_env_var(const char *new_var, char ***env)
 
 	cur_var = 0;
 	cur_var = search_env(new_var, *env);
+	if (cur_var == (char **)1)
+		return (ERROR_MALLOC_CODE);
 	if (cur_var)
 	{
 		free(*cur_var);
 		*cur_var = ft_strdup(new_var);
+		if (!(*cur_var))
+			return (ERROR_MALLOC_CODE);
 	}
 	else
 		return (add_env(new_var, env));
@@ -107,6 +114,8 @@ char	**search_env(const char *name, char **env)
 	char	*word;
 
 	words = ft_split(name, '=');
+	if (!words)
+		return ((char **)1);
 	word = words[0];
 	i = 0;
 	cur_env = 0;
@@ -116,13 +125,6 @@ char	**search_env(const char *name, char **env)
 			cur_env = (char **)&env[i];
 		i++;
 	}
-	i = 1;
-	while (word)
-	{
-		free(word);
-		word = words[i];
-		i++;
-	}
-	free(words);
+	free_array(words);
 	return (cur_env);
 }
