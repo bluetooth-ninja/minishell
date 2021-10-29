@@ -94,6 +94,7 @@ char	**space_split(char const *s)
 	if (!arr)
 		return (NULL);
 	arr = ft_split_array(s, len, arr);
-	arr[len] = 0;
+	if (arr)
+		arr[len] = 0;
 	return (arr);
 }
