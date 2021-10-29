@@ -21,7 +21,7 @@ LIBFT 		= Libft/libft.a
 LIBFTPATH	= Libft/
 
 INCLUDE	= Includes/
-FLAGS	= -Wall -Wextra -Werror# -fsanitize=address -g
+FLAGS	= -Wall -Wextra -Werror -fsanitize=address -g
 RLFLAGS	= -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1.1/include -lreadline 
 CC		= gcc
 

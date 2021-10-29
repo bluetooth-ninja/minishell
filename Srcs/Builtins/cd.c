@@ -12,16 +12,38 @@
 
 #include "minishell.h"
 
+static int	cd_home(char **env)
+{
+	char	*home;
+	int		res;
+
+	home = search_env_value("HOME", (const char **)env);
+	if (!home)
+		return (1);
+	res = chdir(home);
+	free(home);
+	return (res);
+}
+
+static int	my_return(int res)
+{
+	if (res)
+		return (ERROR_MALLOC_CODE);
+	return (0);
+}
+
 int	do_cd(t_list *line_element, char ***env)
 {
 	char	*tmp;
 	int		res;
 
 	tmp = getcwd(0, 0);
-	if (line_element)
+	if (line_element && ft_strncmp(line_element->content, "~", 2))
 		res = chdir((char *)line_element->content);
 	else
-		res = chdir("~");
+		res = cd_home(*env);
+	if (res == 1)
+		return (ERROR_MALLOC_CODE);
 	if (res)
 	{
 		ft_putendl_fd("minishell: cd: No such file or directory", 2);
@@ -35,7 +57,5 @@ int	do_cd(t_list *line_element, char ***env)
 	tmp = getcwd(0, 0);
 	res = change_env_var(ft_strjoin("PWD=", tmp), env);
 	free(tmp);
-	if (res)
-		return (ERROR_MALLOC_CODE);
-	return (0);
+	return (my_return(res));
 }

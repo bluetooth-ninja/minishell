@@ -78,8 +78,8 @@ int	add_env(const char *new_env_var, char ***env)
 	if (new_env == 0)
 		return (ERROR_MALLOC_CODE);
 	ft_memcpy(new_env, *env, i * sizeof(char *));
+	free(*env);
 	*env = new_env;
-	free_array(*env);
 	(*env)[i] = ft_strdup(new_env_var);
 	if (!((*env)[i]))
 		return (ERROR_MALLOC_CODE);
