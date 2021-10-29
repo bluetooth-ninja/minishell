@@ -23,13 +23,13 @@ int	replace_variables(char **str, char **env, int is_q)
 	len = 0;
 	value = take_value(*str, env, is_q, &len);
 	if (!value)
-		return (-1);
+		return (ERROR_MALLOC_CODE);
 	new_str = ft_calloc(ft_strlen(*str) - len + ft_strlen(value) + 1,
 			sizeof(char));
 	if (!new_str)
 	{
 		free(value);
-		return (-1);
+		return (ERROR_MALLOC_CODE);
 	}
 	*str = change_name_to_value(str, new_str, value, is_q);
 	free(start);
@@ -115,7 +115,7 @@ int	do_hast_quotes(char **str, char **env)
 		return (len);
 	new_str = ft_calloc(len + 1, sizeof(char));
 	if (!new_str)
-		return (-1);
+		return (ERROR_MALLOC_CODE);
 	new_str_create(str, new_str, len);
 	free(*str);
 	*str = new_str;

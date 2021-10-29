@@ -12,33 +12,64 @@
 
 #include "minishell.h"
 
-int	find_path(char **path, char **env)
+static int	try_path(char **path, char *dir)
 {
-	int			i;
 	char		*temp;
 	char		*new_path;
-	char		**paths;
 	struct stat	s;
 
-	temp = (char *)search_env_value("PATH", (const char **)env);
-	paths = ft_split(temp, ':');
-	i = -1;
-	while (paths[++i])
+	temp = ft_strjoin("/", *path);
+	if (!temp)
+		return (ERROR_MALLOC_CODE);
+	new_path = ft_strjoin(dir, temp);
+	free(temp);
+	if (!new_path)
+		return (ERROR_MALLOC_CODE);
+	if (stat(new_path, &s) == 0)
 	{
-		temp = ft_strjoin("/", *path);
-		new_path = ft_strjoin(paths[i], temp);
-		free(temp);
-		if (stat(new_path, &s) == 0)
-		{
-			free(*path);
-			*path = new_path;
-			free_array(paths);
-			return (0);
-		}
-		free(new_path);
+		free(*path);
+		*path = new_path;
+		return (1);
 	}
+	free(new_path);
+	return (0);
+}
+
+static int	find_path(char **path, char **env)
+{
+	int		i;
+	char	*temp;
+	char	**paths;
+	int		is_find;
+
+	is_find = 0;
+	temp = (char *)search_env_value("PATH", (const char **)env);
+	if (!temp)
+		return (ERROR_MALLOC_CODE);
+	paths = ft_split(temp, ':');
+	free(temp);
+	if (!paths)
+		return (ERROR_MALLOC_CODE);
+	i = -1;
+	while (paths[++i] && !is_find)
+		is_find = try_path(path, paths[i]);
 	free_array(paths);
-	return (1);
+	return (is_find);
+}
+
+static void	execution(char **arr, char **env)
+{
+	int		res;
+	char	*err;
+
+	res = find_path(arr, env);
+	if (res == ERROR_MALLOC_CODE)
+		exit(res);
+	execve(arr[0], arr, env);
+	err = strerror(errno);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putendl_fd(err, 2);
+	exit(0);
 }
 
 int	do_command(char *str, char ***env)
@@ -50,87 +81,44 @@ int	do_command(char *str, char ***env)
 		return (parse_redir(str, env));
 	res = do_hast_quotes(&str, *env);
 	if (res)
-		return (res);
+		return (ERROR_MALLOC_CODE);
 	arr = space_split(str);
 	if (!arr)
-		return (-1);
+		return (ERROR_MALLOC_CODE);
 	if (is_builtin(arr[0]))
 		res = do_builtins(arr, env);
 	else
 	{
 		if (fork() == 0)
-		{
-			res = find_path(&arr[0], *env);
-			res = execve(arr[0], arr, *env);
-			exit(res);
-		}
+			execution(arr, *env);
 		wait(&res);
 	}
-	return (res);
-}
-
-static int	add_commands(t_list **commands, char *com_line, int com_len)
-{
-	t_list		*new_el;
-	char		*trim_com;
-	char		*tmp;
-	t_command	*new_com;
-
-	trim_com = (char *)ft_calloc(com_len + 1, sizeof(char));
-	if (!trim_com)
-		return (-1);
-	ft_strlcpy(trim_com, com_line, com_len + 1);
-	tmp = ft_strtrim(trim_com, "\t ");
-	free(trim_com);
-	if (!tmp)
-		return (-1);
-	trim_com = tmp;
-	new_com = (t_command *)malloc(sizeof(t_command));
-	if (!new_com)
-	{
-		free(trim_com);
-		return (-1);
-	}
-	new_com->text = trim_com;
-	new_el = ft_lstnew(new_com);
-	if (!new_el)
-	{
-		free(trim_com);
-		free(new_com);
-		return (-1);
-	}
-	ft_lstadd_back(commands, new_el);
+	free_array(arr);
 	return (0);
 }
 
-static t_list	*pipe_split(char *line)
+static int	ifempty(t_list **commands)
 {
-	t_list	*commands;
-	int		i;
-	int		is_q;
-	int		start;
+	t_command	*com;
+	t_list		*command;
+	int			is_err;
 
-	start = 0;
-	i = 0;
-	commands = 0;
-	is_q = 0;
-	while (line[i])
+	is_err = 0;
+	command = *commands;
+	while (command && !is_err)
 	{
-		if (line[i] == '\'' && !is_q)
-			is_q = 1;
-		else if (line[i] == '\"' && !is_q)
-			is_q = 2;
-		else if ((line[i] == '\'' && is_q == 1) || (line[i] == '\"' && is_q == 2))
-			is_q = 0;
-		else if (line[i] == '|' && !is_q)
-		{
-			add_commands(&commands, &line[start], i - start);
-			start = i + 1;
-		}
-		i++;
+		com = command->content;
+		if (*(com->text) == 0)
+			is_err = 1;
+		command = command->next;
 	}
-	add_commands(&commands, &line[start], i - start);
-	return (commands);
+	if (is_err)
+	{
+		ft_lstclear(commands, t_command_clear);
+		ft_putendl_fd(ERROR_EMPTYPIPE_MSG, 2);
+		return (1);
+	}
+	return (0);
 }
 
 int	parse_com(char *line, char ***env)
@@ -146,7 +134,9 @@ int	parse_com(char *line, char ***env)
 	commands = 0;
 	commands = pipe_split(line);
 	if (!commands)
-		return (1);
+		return (ERROR_MALLOC_CODE);
+	if (ifempty(&commands))
+		return (0);
 	while (commands)
 	{
 		if (!commands->next)
@@ -155,5 +145,6 @@ int	parse_com(char *line, char ***env)
 			res = do_pipes(commands->content, commands->next->content, env);
 		commands = commands->next;
 	}
+	ft_lstclear(&commands, t_command_clear);
 	return (res);
 }

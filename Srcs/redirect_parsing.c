@@ -44,7 +44,7 @@ int	parse_redir(char *str, char ***env)
 	type = find_type(str);
 	if (!type)
 	{
-		ft_putendl_fd("minishell: syntax error", 2);
+		ft_putendl_fd("minishell: Syntax error", 2);
 		sh_exit = 1;
 		return (-1);
 	}

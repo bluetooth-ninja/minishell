@@ -25,7 +25,11 @@ char	*search_env_value(const char *name, const char **env)
 	while (env[i] != 0 && !res)
 	{
 		if (!name_strncmp(name, env[i], ft_strlen(name)))
+		{
 			res = ft_strdup(ft_strchr(env[i], '=') + 1);
+			if (!res)
+				return (0);
+		}
 		i++;
 	}
 	if (res == 0)

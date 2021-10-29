@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <errno.h>
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <curses.h>
@@ -33,6 +34,9 @@
 # define L_RDR 3
 # define DR_RDR 4
 # define DL_RDR 5
+# define ERROR_MALLOC_MSG "minishell: Cannt create variable: Not enougth free memory"
+# define ERROR_MALLOC_CODE -1
+# define ERROR_EMPTYPIPE_MSG "minishell: Syntax error near \"|\""
 
 extern int sh_exit;
 
@@ -75,6 +79,8 @@ int		do_unset(t_list *line_element, char ***env);	// Нет проверки н�
 int		do_env(char **env);
 int		exit_shell();									// Будет использоваться при всяком завершении работы. Нужно передавать все для очистки если будем чистить
 
+t_list	*pipe_split(char *line);
+void	t_command_clear(void *elem);
 int		q_error(int res);
 char	*ft_strchrq(const char *s, int ch);
 int		env_cpy(char ***my_env, char **env);

@@ -17,8 +17,8 @@ int sh_exit = 0;
 void	signal_handler(int signum)
 {
 	pid_t	pid;
-	int	res;
-    
+	int		res;
+
 	pid = waitpid(-1, &res, WNOHANG);
 	if (signum == SIGINT)
 	{
@@ -39,23 +39,13 @@ void	signal_handler(int signum)
 	}
 }
 
-int	main(int ac, char **av, char **penv)
+static int	read_lines(char ***env)
 {
 	char	*line;
-	int	res;
-	char	***env;
+	int		res;
 
-	line = NULL;
-	env = (char ***)malloc(sizeof(char **));
-	if (env_cpy(env, penv))
-		return (0);				//error
 	res = 0;
-	(void)av;
-	(void)ac;
-	rl_catch_signals = 0;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	while (1)
+	while (!res)
 	{
 		line = readline("\x1b[1;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
 		if (line == NULL)
@@ -68,4 +58,31 @@ int	main(int ac, char **av, char **penv)
 		free(line);
 	}
 	return (res);
+}
+
+int	main(int ac, char **av, char **penv)
+{
+	int		res;
+	char	***env;
+
+	env = (char ***)malloc(sizeof(char **));
+	if (!env)
+	{
+		printf(ERROR_MALLOC_MSG);
+		return (ERROR_MALLOC_CODE);
+	}
+	*env = 0;
+	res = env_cpy(env, penv);
+	(void)ac;
+	(void)av;
+	rl_catch_signals = 0;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	if (!res)
+		res = read_lines(env);
+	if (*env)
+		free_array(*env);
+	free(env);
+	printf(ERROR_MALLOC_MSG);
+	return (ERROR_MALLOC_CODE);
 }

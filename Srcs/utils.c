@@ -13,24 +13,12 @@
 #include "libft.h"
 #include "minishell.h"
 
-void	free_list(t_list *lst)
-{
-	t_list	*next;
-
-	while (lst)
-	{
-		next = lst->next;
-		free(lst);
-		lst = next;
-	}
-}
-
 int	q_error(int res)
 {
 	if (res == -1)
 	{
-		ft_putendl_fd("minishell: Error: Cannt malloc variable", 2);
-		return (-1);
+		ft_putendl_fd(ERROR_MALLOC_MSG, 2);
+		return (ERROR_MALLOC_CODE);
 	}
 	ft_putendl_fd("minishell: Syntax error: Wrong number of quotes", 2);
 	return (-2);
@@ -79,40 +67,3 @@ int	env_cpy(char ***my_env, char **env)
 	}
 	return (0);
 }
-
-void	free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i] != 0)
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	arr = NULL;
-}
-
-/*
-char	*substr_word(char *str, const char *delims)
-{
-	char	*word;
-	int		i;
-
-	word = NULL;
-	if (!str)
-		return (0);
-	i = 0;
-	while (!ft_strchr(delims, str[i]))
-		i++;
-	if (i > 0)
-	{
-		word = (char *)malloc(sizeof(char) * i);
-		if (!word)
-			return (0);
-		ft_strlcpy(word, str, i);
-	}
-	return (word);
-}
-*/
