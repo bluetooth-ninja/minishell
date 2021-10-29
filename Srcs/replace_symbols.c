@@ -50,28 +50,43 @@ int	find_is_q(char ch, int is_q)
 	return (is_q);
 }
 
+int	function_action(char **str, int *is_q, char **env, int *len)
+{
+	int	res;
+	int	i;
+
+	i = -1;
+	res = 0;
+	while (*str && (*str)[++i] && !res)
+	{
+		if ((*str)[i] == '\'' && !(*is_q))
+			*is_q = 1;
+		else if ((*str)[i] == '\"' && !(*is_q))
+			*is_q = 2;
+		else if ((*str)[i] == '\"' && *is_q == 2)
+			*is_q = 0;
+		else if ((*str)[i] == '\'' && *is_q == 1)
+			*is_q = 0;
+		else if ((*str)[i] == '$' && *is_q != 1)
+		{
+			res = replace_variables(str, env, *is_q);
+			i--;
+		}
+		else
+			(*len)++;
+	}
+	return (res);
+}
+
 int	quotes_len_plus_var(char **str, char **env)
 {
-	int	i;
 	int	is_q;
 	int	res;
 	int	len;
 
 	len = 0;
-	i = -1;
 	is_q = 0;
-	res = 0;
-	while (*str && (*str)[++i] && !res)
-	{
-		is_q = find_is_q((*str)[i], is_q);
-		if ((*str)[i] == '$' && is_q != 1)
-		{
-			res = replace_variables(str, env, is_q);
-			i--;
-		}
-		else if ((*str)[i] != '\'' && (*str)[i] != '\"')
-			len++;
-	}
+	res = function_action(str, &is_q, env, &len);
 	if (res || !(*str))
 		return (ERROR_MALLOC_CODE);
 	if (is_q)
