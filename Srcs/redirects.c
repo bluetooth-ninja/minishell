@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:13:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/29 19:33:54 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/30 03:37:07 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,25 +62,6 @@ static int	do_double_right_redirect(char *file, char *str, char ***env)
 	}
 	dup2(fd, 1);
 	close(fd);
-	res = do_command(str, env);
-	return (res);
-}
-
-int	do_double_left_redirect(char *file, char *str, char ***env)
-{
-	char	*line;
-	int		res;
-
-	dup2(0, 1);
-	line = ft_strdup("");
-	while (ft_strncmp(line, file, ft_strlen(file)))
-	{
-		free(line);
-		line = readline("> ");
-		if (line == NULL)
-			break ;
-		printf("%s\n", line);
-	}
 	res = do_command(str, env);
 	return (res);
 }

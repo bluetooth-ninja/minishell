@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 19:35:34 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/30 01:07:14 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,5 @@ void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);
 int	find_path(char **path, char **env);
-
+int	do_double_left_redirect(char *file, char *str, char ***env);
 #endif

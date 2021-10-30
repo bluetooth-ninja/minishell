@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 19:06:58 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/29 23:18:54 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	execution(char **arr, char **env)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(arr[0], 2);
 		ft_putendl_fd(": command not found", 2);
+        g_sh_exit = 127;
 	}
 	exit(res);
 }
