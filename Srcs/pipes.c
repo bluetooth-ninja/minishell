@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:27:26 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/26 00:40:03 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/30 04:37:21 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,12 @@ static void	do_proccess(t_command *cur, t_command *next, char ***env)
 
 int	do_pipes(t_command *cur, t_command *next, char ***env)
 {
-	//int		res;
 	int		status;
 
-	//res = 0;
 	if (pipe(next->fd) == -1)
 		return (-1);
 	if (fork() == 0)
         do_proccess(cur, next, env);
-	//не закрыли фд
 	wait(&status);
 	return (0);
 }
