@@ -31,3 +31,45 @@ int	error_errno(void)
 {
 	return (-1);
 }
+
+char	**search_env(const char *name, char **env)
+{
+	char	**cur_env;
+	int		i;
+	char	**words;
+	char	*word;
+
+	words = ft_split(name, '=');
+	if (!words)
+		return ((char **)1);
+	word = words[0];
+	i = 0;
+	cur_env = 0;
+	while (env[i] != 0 && !cur_env)
+	{
+		if (!ft_strncmp(env[i], word, ft_strlen(word)))
+			cur_env = (char **)&env[i];
+		i++;
+	}
+	free_array(words);
+	return (cur_env);
+}
+
+int	is_correct_var(char *str, int can_eq)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]))
+		{
+			if (!can_eq || (can_eq && str[i] != '='))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}

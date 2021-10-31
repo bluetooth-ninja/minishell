@@ -105,26 +105,3 @@ int	change_env_var(const char *new_var, char ***env)
 		return (add_env(new_var, env));
 	return (0);
 }
-
-char	**search_env(const char *name, char **env)
-{
-	char	**cur_env;
-	int		i;
-	char	**words;
-	char	*word;
-
-	words = ft_split(name, '=');
-	if (!words)
-		return ((char **)1);
-	word = words[0];
-	i = 0;
-	cur_env = 0;
-	while (env[i] != 0 && !cur_env)
-	{
-		if (!ft_strncmp(env[i], word, ft_strlen(word)))
-			cur_env = (char **)&env[i];
-		i++;
-	}
-	free_array(words);
-	return (cur_env);
-}

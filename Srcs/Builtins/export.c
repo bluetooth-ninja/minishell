@@ -18,7 +18,7 @@ int	do_export(t_list *line_element, char ***env)
 
 	while (line_element)
 	{
-		if (ft_isalpha(((char *)(line_element->content))[0]))
+		if (is_correct_var(line_element->content, 1))
 		{
 			if (ft_strchr(line_element->content, '='))
 			{

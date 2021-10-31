@@ -65,6 +65,7 @@ t_list	*pipe_split(char *line);
 void	t_command_clear(void *elem);
 int		q_error(int res);
 char	*ft_strchrq(const char *s, int ch);
+int		is_correct_var(char *str, int can_eq);
 int		env_cpy(char ***my_env, char **env);
 int		add_env(const char *new_env_var, char ***env);
 int		remove_var(const char *var, char ***env);
