@@ -40,6 +40,7 @@
 # define ERROR_QUOTES_MSG "minishell: Not closed quotes founded"
 
 extern int	g_sh_exit;
+
 typedef struct s_line_element
 {
 	char	*text;
@@ -50,7 +51,8 @@ typedef struct s_command
 	char	*text;
 	int		fd[2];
 }				t_command;
-int		do_exit(char **arr);
+
+int		do_exit(char **arr, t_list *words, t_list *com, char ***env);
 int		do_echo(t_list *line_element);					
 int		do_cd(t_list *line_element, char ***env);
 int		do_pwd(void);
@@ -74,17 +76,18 @@ char	**space_split(char const *s);
 int		parse_com(char *line, char ***env);
 char	*substr_word(char *str, const char *delims);
 void	free_array(char **arr);
-int		parse_redir(char *str, char ***env);
-int		do_redirects(int type, char *file, char *str, char ***env);
-int		do_command(char *str, char ***env);
-int		do_builtins(char **arr, char ***env);
+int		parse_redir(t_list *com, char ***env);
+int		do_redirects(int type, char *file, t_list *com, char ***env);
+int		do_command(t_list *command, char ***env);
+int		do_builtins(char **arr, char ***env, t_list *com);
 int		is_builtin(char *line);
-int		do_pipes(t_command *cur, t_command *next, char ***env);
+int		do_pipes(t_list *com, t_command *next, char ***env);
 int		do_hast_quotes(char **str, char **env);
 int		cut_file(char **str, char **file, int type);
 void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);
 int		find_path(char **path, char **env);
-int		do_double_left_redirect(char *file, char *str, char ***env);
+int		do_double_left_redirect(char *file, t_list *com, char ***env);
+
 #endif

@@ -12,10 +12,12 @@
 
 #include "minishell.h"
 
-static void	do_proccess(t_command *cur, t_command *next, char ***env)
+static void	do_proccess(t_list *com, t_command *next, char ***env)
 {
-	int	res;
+	int			res;
+	t_command	*cur;
 
+	cur = com->content;
 	res = 0;
 	dup2(next->fd[1], 1);
 	close(next->fd[1]);
@@ -24,18 +26,18 @@ static void	do_proccess(t_command *cur, t_command *next, char ***env)
 		dup2(cur->fd[0], 0);
 		close(cur->fd[0]);
 	}
-	res = do_command(cur->text, env);
+	res = do_command(com, env);
 	exit(res);
 }
 
-int	do_pipes(t_command *cur, t_command *next, char ***env)
+int	do_pipes(t_list *com, t_command *next, char ***env)
 {
 	int		status;
 
 	if (pipe(next->fd) == -1)
 		return (-1);
 	if (fork() == 0)
-		do_proccess(cur, next, env);
+		do_proccess(com, next, env);
 	wait(&status);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	do_right_redirect(char *file, char *str, char ***env)
+static int	do_right_redirect(char *file, t_list *com, char ***env)
 {
 	int	fd;
 	int	res;
@@ -26,11 +26,11 @@ static int	do_right_redirect(char *file, char *str, char ***env)
 	}
 	dup2(fd, 1);
 	close(fd);
-	res = do_command(str, env);
+	res = do_command(com, env);
 	return (res);
 }
 
-static int	do_left_redirect(char *file, char *str, char ***env)
+static int	do_left_redirect(char *file, t_list *com, char ***env)
 {
 	int	fd;
 	int	res;
@@ -44,11 +44,11 @@ static int	do_left_redirect(char *file, char *str, char ***env)
 	}
 	dup2(fd, 0);
 	close(fd);
-	res = do_command(str, env);
+	res = do_command(com, env);
 	return (res);
 }
 
-static int	do_double_right_redirect(char *file, char *str, char ***env)
+static int	do_double_right_redirect(char *file, t_list *com, char ***env)
 {
 	int	fd;
 	int	res;
@@ -62,26 +62,26 @@ static int	do_double_right_redirect(char *file, char *str, char ***env)
 	}
 	dup2(fd, 1);
 	close(fd);
-	res = do_command(str, env);
+	res = do_command(com, env);
 	return (res);
 }
 
-int	do_redirects(int type, char *file, char *str, char ***env)
+int	do_redirects(int type, char *file, t_list *com, char ***env)
 {
-	int	res;
-	int	status;
+	int		res;
+	int		status;
 
 	res = 0;
 	if (fork() == 0)
 	{
 		if (type == R_RDR)
-			res = do_right_redirect(file, str, env);
+			res = do_right_redirect(file, com, env);
 		else if (type == L_RDR)
-			res = do_left_redirect(file, str, env);
+			res = do_left_redirect(file, com, env);
 		else if (type == DR_RDR)
-			res = do_double_right_redirect(file, str, env);
+			res = do_double_right_redirect(file, com, env);
 		else if (type == DL_RDR)
-			res = do_double_left_redirect(file, str, env);
+			res = do_double_left_redirect(file, com, env);
 		exit(res);
 	}
 	wait(&status);

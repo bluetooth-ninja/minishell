@@ -32,6 +32,19 @@ static int	my_return(int res)
 	return (0);
 }
 
+static int	do_change_env_var(const char *name, const char *value, char ***env)
+{
+	char	*join;
+	int		res;
+
+	join = ft_strjoin(name, value);
+	if (!join)
+		return (1);
+	res = change_env_var(join, env);
+	free(join);
+	return (res);
+}
+
 int	do_cd(t_list *line_element, char ***env)
 {
 	char	*tmp;
@@ -48,14 +61,15 @@ int	do_cd(t_list *line_element, char ***env)
 	{
 		ft_putendl_fd("minishell: cd: No such file or directory", 2);
 		g_sh_exit = 1;
+		free(tmp);
 		return (1);
 	}
-	res = change_env_var(ft_strjoin("OLDPWD=", tmp), env);
+	res = do_change_env_var("OLDPWD=", tmp, env);
 	free(tmp);
 	if (res)
 		return (ERROR_MALLOC_CODE);
 	tmp = getcwd(0, 0);
-	res = change_env_var(ft_strjoin("PWD=", tmp), env);
+	res = do_change_env_var("PWD=", tmp, env);
 	free(tmp);
 	return (my_return(res));
 }

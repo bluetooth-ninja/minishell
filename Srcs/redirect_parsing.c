@@ -33,22 +33,24 @@ static int	find_type(char *str)
 	return (0);
 }
 
-int	parse_redir(char *str, char ***env)
+int	parse_redir(t_list *com, char ***env)
 {
 	int		type;
 	char	*file;
 	int		res;
+	char	**str;
 
+	str = &(((t_command *)(com->content))->text);
 	res = 0;
 	(void)env;
-	type = find_type(str);
+	type = find_type(*str);
 	if (!type)
 	{
 		ft_putendl_fd("minishell: Syntax error", 2);
 		g_sh_exit = 1;
 		return (-1);
 	}
-	cut_file(&str, &file, type);
-	res = do_redirects(type, file, str, env);
+	cut_file(str, &file, type);
+	res = do_redirects(type, file, com, env);
 	return (res);
 }

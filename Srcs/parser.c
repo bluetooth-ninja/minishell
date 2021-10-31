@@ -30,21 +30,23 @@ static void	execution(char **arr, char **env)
 	exit(res);
 }
 
-int	do_command(char *str, char ***env)
+int	do_command(t_list *command, char ***env)
 {
 	char	**arr;
 	int		res;
+	char	**str;
 
-	if (ft_strchrq(str, '>') || ft_strchrq(str, '<'))
-		return (parse_redir(str, env));
-	res = do_hast_quotes(&str, *env);
+	str = &(((t_command *)(command->content))->text);
+	if (ft_strchrq(*str, '>') || ft_strchrq(*str, '<'))
+		return (parse_redir(command, env));
+	res = do_hast_quotes(str, *env);
 	if (res == ERROR_MALLOC_CODE)
 		return (ERROR_MALLOC_CODE);
-	arr = space_split(str);
+	arr = space_split(*str);
 	if (!arr)
 		return (ERROR_MALLOC_CODE);
 	if (is_builtin(arr[0]))
-		res = do_builtins(arr, env);
+		res = do_builtins(arr, env, command);
 	else
 	{
 		if (fork() == 0)
@@ -83,6 +85,7 @@ int	parse_com(char *line, char ***env)
 {
 	int		res;
 	t_list	*commands;
+	t_list	*tmp;
 
 	while (*line == ' ')
 		line++;
@@ -93,16 +96,17 @@ int	parse_com(char *line, char ***env)
 	commands = pipe_split(line);
 	if (!commands)
 		return (ERROR_MALLOC_CODE);
+	tmp = commands;
 	if (ifempty(&commands))
 		return (0);
 	while (commands)
 	{
 		if (!commands->next)
-			res = do_command(((t_command *)commands->content)->text, env);
+			res = do_command(commands, env);
 		else
 			res = do_pipes(commands->content, commands->next->content, env);
 		commands = commands->next;
 	}
-	ft_lstclear(&commands, t_command_clear);
+	ft_lstclear(&tmp, t_command_clear);
 	return (res);
 }

@@ -22,7 +22,7 @@ int	is_builtin(char *line)
 	return (0);
 }
 
-int	do_builtins(char **arr, char ***env)
+int	do_builtins(char **arr, char ***env, t_list *com)
 {
 	t_list	*words;
 	int		i;
@@ -38,10 +38,7 @@ int	do_builtins(char **arr, char ***env)
 	else if (!ft_memcmp(arr[0], "env", 4))
 		i = do_env(*env);
 	else if (!ft_memcmp(arr[0], "exit", 5))
-	{
-		free_list(words);
-		i = do_exit(arr);
-	}
+		i = do_exit(arr, words, com, env);
 	else if (!ft_memcmp(arr[0], "export", 7))
 		i = do_export(words, env);
 	else if (!ft_memcmp(arr[0], "pwd", 4))

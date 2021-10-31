@@ -33,10 +33,10 @@ void	do_double_left_child(char *file, int fd)
 	close(fd);
 }
 
-int	do_double_left_redirect(char *file, char *str, char ***env)
+int	do_double_left_redirect(char *file, t_list *com, char ***env)
 {
-	int	res;
-	int	fd[2];
+	int		res;
+	int		fd[2];
 
 	pipe(fd);
 	res = 0;
@@ -51,7 +51,7 @@ int	do_double_left_redirect(char *file, char *str, char ***env)
 		dup2(fd[0], 0);
 		close(fd[1]);
 		wait(NULL);
-		res = do_command(str, env);
+		res = do_command(com, env);
 		close(fd[0]);
 		exit(EXIT_SUCCESS);
 	}

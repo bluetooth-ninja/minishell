@@ -36,7 +36,16 @@ static int	is_digits(char *str)
 	return (1);
 }
 
-int	do_exit(char **arr)
+static void	free_exit(char **arr, t_list *words, t_list *com, char ***env)
+{
+	free_array(arr);
+	ft_lstclear(&words, free);
+	ft_lstclear(&com, t_command_clear);
+	free_array(*env);
+	free(env);
+}
+
+int	do_exit(char **arr, t_list *words, t_list *com, char ***env)
 {
 	int	nb;
 
@@ -45,7 +54,7 @@ int	do_exit(char **arr)
 		nb++;
 	if (nb == 1)
 	{
-		free_array(arr);
+		free_exit(arr, words, com, env);
 		exit(g_sh_exit);
 	}
 	if (nb == 2 && is_digits(arr[1]))
@@ -55,7 +64,7 @@ int	do_exit(char **arr)
 			g_sh_exit = ft_atoi(arr[1]) % 256;
 		else
 			g_sh_exit = ft_atoi(arr[1]);
-		free_array(arr);
+		free_exit(arr, words, com, env);
 		exit(g_sh_exit);
 	}
 	if (nb >= 2 && !is_digits(arr[1]))
