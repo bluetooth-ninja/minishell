@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:34:55 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/26 15:41:29 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/31 04:04:50 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int	do_builtins(char **arr, char ***env)
 	else if (!ft_memcmp(arr[0], "env", 4))
 		i = do_env(*env);
 	else if (!ft_memcmp(arr[0], "exit", 5))
+	{
+		free_list(words);
 		i = do_exit(arr);
+	}
 	else if (!ft_memcmp(arr[0], "export", 7))
 		i = do_export(words, env);
 	else if (!ft_memcmp(arr[0], "pwd", 4))

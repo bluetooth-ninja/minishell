@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:27:26 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/30 04:37:21 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/31 04:00:41 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	do_pipes(t_command *cur, t_command *next, char ***env)
 	if (pipe(next->fd) == -1)
 		return (-1);
 	if (fork() == 0)
-        do_proccess(cur, next, env);
+		do_proccess(cur, next, env);
 	wait(&status);
 	return (0);
 }

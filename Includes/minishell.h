@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/30 01:07:14 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/10/31 04:30:10 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,53 +34,31 @@
 # define L_RDR 3
 # define DR_RDR 4
 # define DL_RDR 5
-# define ERROR_MALLOC_MSG "minishell: Cannt create variable: Not enougth free memory"
+# define ERROR_MALLOC_MSG "minishell: Not enough free memory"
 # define ERROR_MALLOC_CODE -1
 # define ERROR_EMPTYPIPE_MSG "minishell: Syntax error near \"|\""
 # define ERROR_QUOTES_MSG "minishell: Not closed quotes founded"
 
-extern int g_sh_exit;
-
-typedef struct	s_line_element
+extern int	g_sh_exit;
+typedef struct s_line_element
 {
 	char	*text;
 	int		iscommand;
 }				t_line_element;
-
-typedef struct	s_command
+typedef struct s_command
 {
 	char	*text;
 	int		fd[2];
 }				t_command;
-
-/* Структура, которая будет использоваться в списках                            */
-/* Как выглядит список (t_list из libft):                                       */
-/* {                                                                            */
-/*     void    *content;    тут будет храниться указатель на t_line_element     */
-/*     t_list  *next;                                                           */
-/* }                                                                            */
-
-/* Прототипы конечных функций. Скорее всего потом в отдельный файл переместятся */
-
-/* Возвращаемое значение показывает наличие ошибки и мб код ошибки              */
-/* Пока просто необходимо учитывать его наличичие и сохранять в переменную      */
-/* Предполагается что line_element при вызове указывает на элемент с командой   */
-
-
-/* Любые do_ функции не обрабатывают ошибку в случае неправильного числа аргументов на вход */
-/*    и принимают t_list со стартовым элементом - командой (не проверяют на корректность)   */
-/*   Также необходимо обработать преобразование имени переменных в текст до вызова функций  */
-
 int		do_exit(char **arr);
-int		do_echo(t_list *line_element);					// Не работает тест для аргументов со спец. символами
+int		do_echo(t_list *line_element);					
 int		do_cd(t_list *line_element, char ***env);
-int		do_pwd();
+int		do_pwd(void);
 int		do_export(t_list *line_element, char ***env);
-int		do_unset(t_list *line_element, char ***env);	// Нет проверки на 0 аргументов
+int		do_unset(t_list *line_element, char ***env);
 int		do_env(char **env);
-int		exit_shell();									// Будет использоваться при всяком завершении работы. Нужно передавать все для очистки если будем чистить
-
-int		error_errno();
+int		exit_shell(void);
+int		error_errno(void);
 t_list	*pipe_split(char *line);
 void	t_command_clear(void *elem);
 int		q_error(int res);
@@ -97,7 +75,7 @@ int		parse_com(char *line, char ***env);
 char	*substr_word(char *str, const char *delims);
 void	free_array(char **arr);
 int		parse_redir(char *str, char ***env);
-int 	do_redirects(int type, char *file, char *str, char ***env);
+int		do_redirects(int type, char *file, char *str, char ***env);
 int		do_command(char *str, char ***env);
 int		do_builtins(char **arr, char ***env);
 int		is_builtin(char *line);
@@ -107,6 +85,6 @@ int		cut_file(char **str, char **file, int type);
 void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);
-int	find_path(char **path, char **env);
-int	do_double_left_redirect(char *file, char *str, char ***env);
+int		find_path(char **path, char **env);
+int		do_double_left_redirect(char *file, char *str, char ***env);
 #endif

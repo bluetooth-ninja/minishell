@@ -27,7 +27,7 @@ int	name_strncmp(const char *name, const char *var, int len)
 	return (res);
 }
 
-int	error_errno()
+int	error_errno(void)
 {
 	return (-1);
 }
