@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*take_file(char *redir_p, char *endfile_p)
+static char	*take_file(char *redir_p, char *endfile_p)
 {
 	char	*file;
 	char	*tmp;
@@ -39,14 +39,14 @@ char	*take_file(char *redir_p, char *endfile_p)
 	return (file);
 }
 
-char	*take_com(char *str, char *redir_p, char *endfile_p)
+static void	take_com(char **str, char *redir_p, char *endfile_p)
 {
 	char	*com;
 
 	*redir_p = 0;
-	com = ft_strjoin(str, endfile_p);
-	free(str);
-	return (com);
+	com = ft_strjoin(*str, endfile_p);
+	free(*str);
+	*str = com;
 }
 
 int	cut_file(char **str, char **file, int type)
@@ -67,8 +67,13 @@ int	cut_file(char **str, char **file, int type)
 	if (endfile_p == 0)
 		endfile_p = redir_p + ft_strlen(redir_p);
 	*file = take_file(redir_p, endfile_p);
-	*str = take_com(*str, redir_p, endfile_p);
-	if (!*file || *str)
-		return (-1);
+	if (!*file)
+		return (ERROR_MALLOC_CODE);
+	take_com(str, redir_p, endfile_p);
+	if (!*str)
+	{
+		free(*file);
+		return (ERROR_MALLOC_CODE);
+	}
 	return (0);
 }

@@ -45,9 +45,9 @@ int	do_command(t_list *command, char ***env)
 	arr = space_split(*str);
 	if (!arr)
 		return (ERROR_MALLOC_CODE);
-	if (is_builtin(arr[0]))
+	if (arr[0] && is_builtin(arr[0]))
 		res = do_builtins(arr, env, command);
-	else
+	else if (arr[0])
 	{
 		if (fork() == 0)
 			execution(arr, *env);

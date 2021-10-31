@@ -42,15 +42,22 @@ int	parse_redir(t_list *com, char ***env)
 
 	str = &(((t_command *)(com->content))->text);
 	res = 0;
-	(void)env;
 	type = find_type(*str);
 	if (!type)
 	{
 		ft_putendl_fd("minishell: Syntax error", 2);
 		g_sh_exit = 1;
-		return (-1);
+		return (0);
 	}
-	cut_file(str, &file, type);
-	res = do_redirects(type, file, com, env);
+	res = cut_file(str, &file, type);
+	if (res)
+		return (ERROR_MALLOC_CODE);
+	if (!(*file) || *file == '<' || *file == '>')
+		ft_putendl_fd("minishell: Syntax error", 2);
+	if (!(*file) || *file == '<' || *file == '>')
+		g_sh_exit = 1;
+	else
+		res = do_redirects(type, file, com, env);
+	free(file);
 	return (res);
 }

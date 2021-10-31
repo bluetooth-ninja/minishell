@@ -68,7 +68,7 @@ int	main(int ac, char **av, char **penv)
 	env = (char ***)malloc(sizeof(char **));
 	if (!env)
 	{
-		printf(ERROR_MALLOC_MSG);
+		ft_putendl_fd(ERROR_MALLOC_MSG, 2);
 		return (ERROR_MALLOC_CODE);
 	}
 	*env = 0;
@@ -83,6 +83,6 @@ int	main(int ac, char **av, char **penv)
 	if (*env)
 		free_array(*env);
 	free(env);
-	printf(ERROR_MALLOC_MSG);
+	ft_putendl_fd(ERROR_MALLOC_MSG, 2);
 	return (ERROR_MALLOC_CODE);
 }
