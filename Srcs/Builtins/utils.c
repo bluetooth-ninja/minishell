@@ -37,6 +37,23 @@ char	*search_env_value(const char *name, const char **env)
 	return (res);
 }
 
+static void	env_cpydel(char ***env, char **new_env, int i_del)
+{
+	int	i;
+
+	i = -1;
+	while ((*env)[++i])
+	{
+		if (i < i_del)
+			new_env[i] = (*env)[i];
+		else if (i > i_del)
+			new_env[i - 1] = (*env)[i];
+	}
+	free((*env)[i_del]);
+	free(*env);
+	*env = new_env;
+}
+
 int	remove_var(const char *var, char ***env)
 {
 	int		i;
@@ -53,16 +70,7 @@ int	remove_var(const char *var, char ***env)
 	new_env = ft_calloc(i, sizeof(char *));
 	if (new_env == 0)
 		return (ERROR_MALLOC_CODE);
-	i = -1;
-	while ((*env)[++i])
-	{
-		if (i < i_del)
-			new_env[i] = (*env)[i];
-		else if (i > i_del)
-			new_env[i - 1] = (*env)[i];
-	}
-	free(*env);
-	*env = new_env;
+	env_cpydel(env, new_env, i_del);
 	return (0);
 }
 
