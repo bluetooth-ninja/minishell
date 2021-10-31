@@ -17,7 +17,7 @@ static int	check_option(t_list **list)
 	t_list	*line_element;
 
 	line_element = *list;
-	if (line_element->next)
+	if (line_element)
 	{
 		if (!ft_strncmp((char *)line_element->content, "-n", 3))
 		{

@@ -64,7 +64,7 @@ int	is_correct_var(char *str, int can_eq)
 		return (0);
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
 			if (!can_eq || (can_eq && str[i] != '='))
 				return (0);
