@@ -14,15 +14,24 @@
 
 int	do_export(t_list *line_element, char ***env)
 {
-	int	res;
+	int		res;
 
 	while (line_element)
 	{
-		if (ft_strchr(line_element->content, '='))
+		if (ft_isalpha(((char *)(line_element->content))[0]))
 		{
-			res = change_env_var(line_element->content, env);
-			if (res == ERROR_MALLOC_CODE)
-				return (res);
+			if (ft_strchr(line_element->content, '='))
+			{
+				res = change_env_var(line_element->content, env);
+				if (res == ERROR_MALLOC_CODE)
+					return (res);
+			}
+		}
+		else
+		{
+			ft_putstr_fd("minishell: export: «", 2);
+			ft_putstr_fd(line_element->content, 2);
+			ft_putendl_fd("»: wrong input", 2);
 		}
 		line_element = line_element->next;
 	}
