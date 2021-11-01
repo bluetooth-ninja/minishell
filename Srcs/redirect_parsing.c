@@ -33,6 +33,13 @@ static int	find_type(char *str)
 	return (0);
 }
 
+static int	result(int res)
+{
+	if (res == -2)
+		return (0);
+	return (res);
+}
+
 int	parse_redir(t_list *com, char ***env)
 {
 	int		type;
@@ -51,7 +58,7 @@ int	parse_redir(t_list *com, char ***env)
 	}
 	res = cut_file(str, &file, type, *env);
 	if (res)
-		return (res);
+		return (result(res));
 	if (!(*file) || *file == '<' || *file == '>')
 		ft_putendl_fd("minishell: Syntax error", 2);
 	if (!(*file) || *file == '<' || *file == '>')

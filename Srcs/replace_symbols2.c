@@ -42,23 +42,25 @@ char	*change_name_to_value(char **str, char *new_str, char *value, int is_q)
 {
 	char	*name;
 	int		i;
+	char	*t_str;
 
-	name = ft_strchr(*str, '$');
+	t_str = *str;
+	name = ft_strchr(t_str, '$');
 	i = 0;
-	while (**str && *str != name)
+	while (*t_str && t_str != name)
 	{
-		new_str[i++] = **str;
-		(*str)++;
+		new_str[i++] = *t_str;
+		t_str++;
 	}
 	while (*value)
 		new_str[i++] = *value++;
-	while (**str && **str != ' ' && ((is_q == 2 && **str != '\"') ||
-			(!is_q && **str != '\'' && **str != '\"')))
-		(*str)++;
-	while (**str)
+	while (*t_str && *t_str != ' ' && ((is_q == 2 && *t_str != '\"') ||
+			(!is_q && *t_str != '\'' && *t_str != '\"')))
+		t_str++;
+	while (*t_str)
 	{
-		new_str[i++] = **str;
-		(*str)++;
+		new_str[i++] = *t_str;
+		t_str++;
 	}
 	return (new_str);
 }

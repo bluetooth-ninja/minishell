@@ -42,6 +42,8 @@ int	do_command(t_list *command, char ***env)
 	res = do_hast_quotes(str, *env);
 	if (res == ERROR_MALLOC_CODE)
 		return (ERROR_MALLOC_CODE);
+	if (res == -2)
+		return (0);
 	arr = space_split(*str);
 	if (!arr)
 		return (ERROR_MALLOC_CODE);

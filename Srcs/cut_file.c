@@ -12,7 +12,14 @@
 
 #include "minishell.h"
 
-static int take_file(char **file, char *redir_p, char *endfile_p, char **env)
+static int	quotes_for_rita(char **file, int res)
+{
+	if (res == -2)
+		free(*file);
+	return (res);
+}
+
+static int	take_file(char **file, char *redir_p, char *endfile_p, char **env)
 {
 	char	*tmp;
 	int		res;
@@ -71,7 +78,7 @@ int	cut_file(char **str, char **file, int type, char **env)
 		endfile_p = redir_p + ft_strlen(redir_p);
 	res = take_file(file, redir_p, endfile_p, env);
 	if (res)
-		return (res);
+		return (quotes_for_rita(file, res));
 	take_com(str, redir_p, endfile_p);
 	if (!*str)
 		free(*file);
