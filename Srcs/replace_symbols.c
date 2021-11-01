@@ -37,20 +37,7 @@ int	replace_variables(char **str, char **env, int is_q)
 	return (0);
 }
 
-int	find_is_q(char ch, int is_q)
-{
-	if (ch == '\'' && !is_q)
-		is_q = 1;
-	else if (ch == '\"' && !is_q)
-		is_q = 2;
-	else if (ch == '\"' && is_q == 2)
-		is_q = 0;
-	else if (ch == '\'' && is_q == 1)
-		is_q = 0;
-	return (is_q);
-}
-
-int	function_action(char **str, int *is_q, char **env, int *len)
+static int	function_action(char **str, int *is_q, char **env, int *len)
 {
 	int	res;
 	int	i;
@@ -78,7 +65,7 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 	return (res);
 }
 
-int	quotes_len_plus_var(char **str, char **env)
+static int	quotes_len_plus_var(char **str, char **env)
 {
 	int	is_q;
 	int	res;
@@ -94,7 +81,7 @@ int	quotes_len_plus_var(char **str, char **env)
 	return (len);
 }
 
-void	new_str_create(char **str, char *new_str, int len)
+static void	new_str_create(char **str, char *new_str, int len)
 {
 	int	i;
 	int	new_i;

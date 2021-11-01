@@ -12,31 +12,33 @@
 
 #include "minishell.h"
 
-static char	*take_file(char *redir_p, char *endfile_p)
+static int take_file(char **file, char *redir_p, char *endfile_p, char **env)
 {
-	char	*file;
 	char	*tmp;
+	int		res;
 
 	while (*redir_p == '<' || *redir_p == '>')
 		redir_p++;
 	while (*redir_p == ' ')
 		redir_p++;
-	file = (char *)ft_calloc(endfile_p - redir_p + 1, sizeof(char));
-	if (!file)
-		return (0);
-	tmp = file;
+	*file = (char *)ft_calloc(endfile_p - redir_p + 1, sizeof(char));
+	if (!(*file))
+		return (ERROR_MALLOC_CODE);
+	tmp = *file;
 	while (redir_p != endfile_p)
 	{
-		*file = *redir_p;
+		*tmp = *redir_p;
 		redir_p++;
-		file++;
+		tmp++;
 	}
-	*file = 0;
-	file = ft_strtrim(tmp, " ");
+	*tmp = 0;
+	tmp = *file;
+	*file = ft_strtrim(tmp, " ");
 	free(tmp);
-	if (!file)
-		return (0);
-	return (file);
+	if (!(*file))
+		return (ERROR_MALLOC_CODE);
+	res = do_hast_quotes(file, env);
+	return (res);
 }
 
 static void	take_com(char **str, char *redir_p, char *endfile_p)
@@ -49,10 +51,11 @@ static void	take_com(char **str, char *redir_p, char *endfile_p)
 	*str = com;
 }
 
-int	cut_file(char **str, char **file, int type)
+int	cut_file(char **str, char **file, int type, char **env)
 {
 	char	*redir_p;
 	char	*endfile_p;
+	int		res;
 
 	if (type == R_RDR || type == DR_RDR)
 		redir_p = ft_strchrq(*str, '>');
@@ -66,14 +69,13 @@ int	cut_file(char **str, char **file, int type)
 	endfile_p = ft_strchrq(endfile_p, ' ');
 	if (endfile_p == 0)
 		endfile_p = redir_p + ft_strlen(redir_p);
-	*file = take_file(redir_p, endfile_p);
-	if (!*file)
-		return (ERROR_MALLOC_CODE);
+	res = take_file(file, redir_p, endfile_p, env);
+	if (res)
+		return (res);
 	take_com(str, redir_p, endfile_p);
 	if (!*str)
-	{
 		free(*file);
+	if (!*str)
 		return (ERROR_MALLOC_CODE);
-	}
 	return (0);
 }

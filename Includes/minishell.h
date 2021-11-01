@@ -84,7 +84,7 @@ int		do_builtins(char **arr, char ***env, t_list *com);
 int		is_builtin(char *line);
 int		do_pipes(t_list *com, t_command *next, char ***env);
 int		do_hast_quotes(char **str, char **env);
-int		cut_file(char **str, char **file, int type);
+int		cut_file(char **str, char **file, int type, char **env);
 void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);

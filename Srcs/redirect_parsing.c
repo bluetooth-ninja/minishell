@@ -49,9 +49,9 @@ int	parse_redir(t_list *com, char ***env)
 		g_sh_exit = 1;
 		return (0);
 	}
-	res = cut_file(str, &file, type);
+	res = cut_file(str, &file, type, *env);
 	if (res)
-		return (ERROR_MALLOC_CODE);
+		return (res);
 	if (!(*file) || *file == '<' || *file == '>')
 		ft_putendl_fd("minishell: Syntax error", 2);
 	if (!(*file) || *file == '<' || *file == '>')
