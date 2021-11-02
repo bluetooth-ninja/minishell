@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:33:15 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/02 23:36:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 00:39:36 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 	return (res);
 }
 
-int	quotes_len_plus_var(char **str, char **env)
+static int	quotes_len_plus_var(char **str, char **env)
 {
 	int	is_q;
 	int	res;
@@ -81,7 +81,7 @@ int	quotes_len_plus_var(char **str, char **env)
 	return (len);
 }
 
-void	new_str_create(char **str, char *new_str, int len)
+static void	new_str_create(char **str, char *new_str, int len)
 {
 	int	i;
 	int	new_i;
