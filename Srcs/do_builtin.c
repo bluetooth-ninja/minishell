@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:34:55 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/31 04:04:50 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,5 @@ int	do_builtins(char **arr, char ***env, t_list *com)
 	else
 		i = do_unset(words, env);
 	free_list(words);
-	if (i == ERROR_MALLOC_CODE)
-		return (i);
-	return (0);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 01:36:25 by vlucilla          #+#    #+#             */
-/*   Updated: 2020/11/18 01:36:49 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 00:30:38 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	ft_putendl_fd(char *s, int fd)
 {
 	if (s)
+    {
 		write(fd, s, ft_strlen(s));
-	ft_putchar_fd('\n', fd);
+	    ft_putchar_fd('\n', fd);
+    }
 }

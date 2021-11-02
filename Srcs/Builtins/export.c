@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:48 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/24 17:54:23 by wgaunt           ###   ########.fr       */
+/*   Updated: 2021/11/02 02:52:53 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	do_export(t_list *line_element, char ***env)
 			if (ft_strchr(line_element->content, '='))
 			{
 				res = change_env_var(line_element->content, env);
-				if (res == ERROR_MALLOC_CODE)
+				if (res == ERR_CODE)
 					return (res);
 			}
 		}
@@ -32,6 +32,8 @@ int	do_export(t_list *line_element, char ***env)
 			ft_putstr_fd("minishell: export: «", 2);
 			ft_putstr_fd(line_element->content, 2);
 			ft_putendl_fd("»: wrong input", 2);
+			g_sh_exit = 1;
+			return (1);
 		}
 		line_element = line_element->next;
 	}

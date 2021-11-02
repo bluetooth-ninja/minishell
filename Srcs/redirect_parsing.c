@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 20:19:47 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/30 03:54:12 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 23:59:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ static int	find_type(char *str)
 	return (0);
 }
 
+static int	result(int res)
+{
+	g_sh_exit = 2;
+	if (res == -2)
+		return (2);
+	return (ERR_CODE);
+}
+
 int	parse_redir(t_list *com, char ***env)
 {
 	int		type;
@@ -46,16 +54,16 @@ int	parse_redir(t_list *com, char ***env)
 	if (!type)
 	{
 		ft_putendl_fd("minishell: Syntax error", 2);
-		g_sh_exit = 1;
-		return (0);
+		return (result(-2));
 	}
-	res = cut_file(str, &file, type);
+	res = cut_file(str, &file, type, *env);
 	if (res)
-		return (ERROR_MALLOC_CODE);
+		return (result(res));
 	if (!(*file) || *file == '<' || *file == '>')
+	{
 		ft_putendl_fd("minishell: Syntax error", 2);
-	if (!(*file) || *file == '<' || *file == '>')
-		g_sh_exit = 1;
+		g_sh_exit = 2;
+	}
 	else
 		res = do_redirects(type, file, com, env);
 	free(file);

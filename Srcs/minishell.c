@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 19:36:34 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 22:25:46 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	read_lines(char ***env)
 	int		res;
 
 	res = 0;
-	while (!res)
+	while (res != ERR_CODE)
 	{
 		line = readline("\x1b[1;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
 		if (line == NULL)
@@ -69,7 +69,7 @@ int	main(int ac, char **av, char **penv)
 	if (!env)
 	{
 		ft_putendl_fd(ERROR_MALLOC_MSG, 2);
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	}
 	*env = 0;
 	res = env_cpy(env, penv);
@@ -84,5 +84,5 @@ int	main(int ac, char **av, char **penv)
 		free_array(*env);
 	free(env);
 	ft_putendl_fd(ERROR_MALLOC_MSG, 2);
-	return (ERROR_MALLOC_CODE);
+	return (ERR_CODE);
 }

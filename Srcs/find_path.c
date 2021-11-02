@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 19:06:33 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/29 19:07:14 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	try_path(char **path, char *dir)
 
 	temp = ft_strjoin("/", *path);
 	if (!temp)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	new_path = ft_strjoin(dir, temp);
 	free(temp);
 	if (!new_path)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	if (stat(new_path, &s) == 0)
 	{
 		free(*path);
@@ -45,11 +45,11 @@ int	find_path(char **path, char **env)
 	is_find = 0;
 	temp = (char *)search_env_value("PATH", (const char **)env);
 	if (!temp)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	paths = ft_split(temp, ':');
 	free(temp);
 	if (!paths)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	i = -1;
 	while (paths[++i] && !is_find)
 		is_find = try_path(path, paths[i]);

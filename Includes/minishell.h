@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/31 04:30:10 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 18:42:40 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define DR_RDR 4
 # define DL_RDR 5
 # define ERROR_MALLOC_MSG "minishell: Not enough free memory"
-# define ERROR_MALLOC_CODE -1
+# define ERR_CODE -1
 # define ERROR_EMPTYPIPE_MSG "minishell: Syntax error near \"|\""
 # define ERROR_QUOTES_MSG "minishell: Not closed quotes founded"
 
@@ -84,7 +84,7 @@ int		do_builtins(char **arr, char ***env, t_list *com);
 int		is_builtin(char *line);
 int		do_pipes(t_list *com, t_command *next, char ***env);
 int		do_hast_quotes(char **str, char **env);
-int		cut_file(char **str, char **file, int type);
+int		cut_file(char **str, char **file, int type, char **env);
 void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
 char	*take_value(char *str, char **env, int is_q, int *len);

@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:27:26 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/31 04:00:41 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ static int	add_commands(t_list **commands, char *com_line, int com_len)
 
 	trim_com = (char *)ft_calloc(com_len + 1, sizeof(char));
 	if (!trim_com)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	ft_strlcpy(trim_com, com_line, com_len + 1);
 	tmp = ft_strtrim(trim_com, "\t ");
 	free(trim_com);
 	if (!tmp)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	trim_com = tmp;
 	new_com = (t_command *)malloc(sizeof(t_command));
 	if (!new_com)
 	{
 		free(trim_com);
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	}
 	new_com->text = trim_com;
 	new_el = ft_lstnew(new_com);
@@ -70,7 +70,7 @@ static int	add_commands(t_list **commands, char *com_line, int com_len)
 	{
 		free(trim_com);
 		free(new_com);
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	}
 	ft_lstadd_back(commands, new_el);
 	return (0);

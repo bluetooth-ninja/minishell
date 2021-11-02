@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:13:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/10/30 03:37:07 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 02:41:22 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,13 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 {
 	int		res;
 	int		status;
+	pid_t	pid;
 
 	res = 0;
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+		return (ERR_CODE);
+	if (pid == 0)
 	{
 		if (type == R_RDR)
 			res = do_right_redirect(file, com, env);
@@ -84,7 +88,7 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 			res = do_double_left_redirect(file, com, env);
 		exit(res);
 	}
-	wait(&status);
-	g_sh_exit = status / 256;
+	waitpid(pid, &status, 0);
+	g_sh_exit = WEXITSTATUS(status);
 	return (res);
 }

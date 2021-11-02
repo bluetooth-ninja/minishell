@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:06:30 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 19:36:15 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	remove_var(const char *var, char ***env)
 		return (0);
 	new_env = ft_calloc(i, sizeof(char *));
 	if (new_env == 0)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	env_cpydel(env, new_env, i_del);
 	return (0);
 }
@@ -84,13 +84,13 @@ int	add_env(const char *new_env_var, char ***env)
 		i++;
 	new_env = ft_calloc(i + 2, sizeof(char *));
 	if (new_env == 0)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	ft_memcpy(new_env, *env, i * sizeof(char *));
 	free(*env);
 	*env = new_env;
 	(*env)[i] = ft_strdup(new_env_var);
 	if (!((*env)[i]))
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	return (0);
 }
 
@@ -101,13 +101,13 @@ int	change_env_var(const char *new_var, char ***env)
 	cur_var = 0;
 	cur_var = search_env(new_var, *env);
 	if (cur_var == (char **)1)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	if (cur_var)
 	{
 		free(*cur_var);
 		*cur_var = ft_strdup(new_var);
 		if (!(*cur_var))
-			return (ERROR_MALLOC_CODE);
+			return (ERR_CODE);
 	}
 	else
 		return (add_env(new_var, env));

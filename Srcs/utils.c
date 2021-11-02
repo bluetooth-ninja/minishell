@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 20:56:23 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/26 00:36:45 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	q_error(int res)
 	if (res == -1)
 	{
 		ft_putendl_fd(ERROR_MALLOC_MSG, 2);
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	}
 	ft_putendl_fd("minishell: Syntax error: Wrong number of quotes", 2);
 	return (-2);

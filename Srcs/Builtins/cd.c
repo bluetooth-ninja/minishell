@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:39 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/29 19:37:30 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	cd_home(char **env)
 static int	my_return(int res)
 {
 	if (res)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	return (0);
 }
 
@@ -56,7 +56,7 @@ int	do_cd(t_list *line_element, char ***env)
 	else
 		res = cd_home(*env);
 	if (res == 1)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	if (res)
 	{
 		ft_putendl_fd("minishell: cd: No such file or directory", 2);
@@ -67,7 +67,7 @@ int	do_cd(t_list *line_element, char ***env)
 	res = do_change_env_var("OLDPWD=", tmp, env);
 	free(tmp);
 	if (res)
-		return (ERROR_MALLOC_CODE);
+		return (ERR_CODE);
 	tmp = getcwd(0, 0);
 	res = do_change_env_var("PWD=", tmp, env);
 	free(tmp);
