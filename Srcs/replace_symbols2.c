@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*take_value(char *str, char **env, int is_q, int *len)
+char	*take_value(char *str, char **env, int *len)
 {
 	char	*n_str;
 	char	*name;
@@ -22,23 +22,22 @@ char	*take_value(char *str, char **env, int is_q, int *len)
 	i = -1;
 	*len = 0;
 	n_str = ft_strchr(str, '$');
-	while (n_str[++i] && n_str[i] != ' ' && ((is_q == 2 && n_str[i] != '\"')
-			|| (!is_q && n_str[i] != '\'' && n_str[i] != '\"')))
+	while (n_str[++i] && n_str[i] != ' ' && n_str[i] != '\"'
+			&& n_str[i] != '\'')
 		(*len)++;
 	name = (char *)ft_calloc(*len, sizeof(char));
 	if (!name)
 		return (0);
 	i = -1;
-	while (n_str[++i + 1] && n_str[i + 1] != ' ' && ((is_q == 2
-				&& n_str[i + 1] != '\"') || (!is_q && n_str[i + 1] != '\''
-				&& n_str[i + 1] != '\"')))
+	while (n_str[++i + 1] && n_str[i + 1] != ' ' && n_str[i + 1] != '\"'
+			&& n_str[i + 1] != '\'')
 		name[i] = n_str[i + 1];
 	value = search_env_value(name, (const char **)env);
 	free(name);
 	return (value);
 }
 
-char	*change_name_to_value(char **str, char *new_str, char *value, int is_q)
+char	*change_name_to_value(char **str, char *new_str, char *value)
 {
 	char	*name;
 	int		i;
@@ -54,8 +53,7 @@ char	*change_name_to_value(char **str, char *new_str, char *value, int is_q)
 	}
 	while (*value)
 		new_str[i++] = *value++;
-	while (*t_str && *t_str != ' ' && ((is_q == 2 && *t_str != '\"')
-			|| (!is_q && *t_str != '\'' && *t_str != '\"')))
+	while (*t_str && *t_str != ' ' && *t_str != '\"' && *t_str != '\'')
 		t_str++;
 	while (*t_str)
 	{
