@@ -86,8 +86,8 @@ int		do_pipes(t_list *com, t_command *next, char ***env);
 int		do_hast_quotes(char **str, char **env);
 int		cut_file(char **str, char **file, int type, char **env);
 void	free_list(t_list *lst);
-char	*change_name_to_value(char **str, char *new_str, char *value, int is_q);
-char	*take_value(char *str, char **env, int is_q, int *len);
+char	*change_name_to_value(char **str, char *new_str, char *value);
+char	*take_value(char *str, char **env, int *len);
 int		find_path(char **path, char **env);
 int		do_double_left_redirect(char *file, t_list *com, char ***env);
 
