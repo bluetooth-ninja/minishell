@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:13:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/02 02:41:22 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 18:08:05 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	do_right_redirect(char *file, t_list *com, char ***env)
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0744);
 	if (fd < 0)
 	{
-		ft_putendl_fd("minishell: No such file or directory", 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		g_sh_exit = 1;
 		return (1);
 	}
@@ -38,7 +41,10 @@ static int	do_left_redirect(char *file, t_list *com, char ***env)
 	fd = open(file, O_RDONLY, 0644);
 	if (fd < 0)
 	{
-		ft_putendl_fd("minishell: No such file or directory", 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		g_sh_exit = 1;
 		return (1);
 	}
@@ -56,7 +62,10 @@ static int	do_double_right_redirect(char *file, t_list *com, char ***env)
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0744);
 	if (fd < 0)
 	{
-		ft_putendl_fd("minishell: No such file or directory", 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		g_sh_exit = 1;
 		return (1);
 	}

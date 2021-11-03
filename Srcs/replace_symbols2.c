@@ -23,14 +23,14 @@ char	*take_value(char *str, char **env, int *len)
 	*len = 0;
 	n_str = ft_strchr(str, '$');
 	while (n_str[++i] && n_str[i] != ' ' && n_str[i] != '\"'
-			&& n_str[i] != '\'')
+		&& n_str[i] != '\'')
 		(*len)++;
 	name = (char *)ft_calloc(*len, sizeof(char));
 	if (!name)
 		return (0);
 	i = -1;
 	while (n_str[++i + 1] && n_str[i + 1] != ' ' && n_str[i + 1] != '\"'
-			&& n_str[i + 1] != '\'')
+		&& n_str[i + 1] != '\'')
 		name[i] = n_str[i + 1];
 	value = search_env_value(name, (const char **)env);
 	free(name);
