@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/03 18:52:37 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 22:36:44 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,6 @@ void	signal_handler(int signum)
 			rl_replace_line("", 0);
 			rl_redisplay();
 		}
-		else
-			write(1, "\n", 1);
-	}
-	if (signum == SIGQUIT)
-	{
-		if (pid != -1)
-			write(1, "Quit\n", 5);
 	}
 }
 
