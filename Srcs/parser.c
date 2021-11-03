@@ -18,12 +18,14 @@ static int	command_execve(char **arr, char **env)
 	int		res;
 	int		status;
 
+	res = 0;
 	pid = fork();
 	if (pid == -1)
 		return (ERR_CODE);
 	if (pid == 0)
 	{
-		res = find_path(arr, env);
+		if (!ft_strchr(arr[0], '/'))
+			res = find_path(arr, env);
 		if (res == ERR_CODE)
 			exit(ERR_CODE);
 		res = execve(arr[0], arr, env);
