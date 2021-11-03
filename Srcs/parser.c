@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/03 00:38:53 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 18:52:04 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,7 @@ static int	command_execve(char **arr, char **env)
 			exit(ERR_CODE);
 		res = execve(arr[0], arr, env);
 		if (res == -1)
-		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(arr[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			exit(127);
-		}
+			execve_err(arr[0]);
 		exit(res);
 	}
 	waitpid(pid, &status, 0);

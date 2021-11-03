@@ -6,12 +6,29 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 20:56:23 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/03 18:51:25 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+
+void	execve_err(char *str)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": ", 2);
+	if (errno == 2)
+	{
+		ft_putendl_fd("command not found", 2);
+		exit(127);
+	}
+	else
+	{
+		ft_putendl_fd(strerror(errno), 2);
+		exit(126);
+	}
+}
 
 int	q_error(int res)
 {
