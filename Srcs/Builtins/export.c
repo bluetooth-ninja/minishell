@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-int	do_export(t_list *line_element, char ***env)
+static int	export(t_list *line_element, char ***env)
 {
-	int		res;
+	int	res;
 
 	while (line_element)
 	{
@@ -38,4 +38,15 @@ int	do_export(t_list *line_element, char ***env)
 		line_element = line_element->next;
 	}
 	return (0);
+}
+
+int	do_export(t_list *line_element, char ***env)
+{
+	int	res;
+
+	if (line_element->next)
+		res = export(line_element);
+	else
+		res = do_env(*env);
+	return (res);
 }
