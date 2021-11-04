@@ -44,7 +44,7 @@ int	do_export(t_list *line_element, char ***env)
 {
 	int	res;
 
-	if (line_element->next)
+	if (line_element)
 		res = export(line_element, env);
 	else
 		res = do_env(*env);
