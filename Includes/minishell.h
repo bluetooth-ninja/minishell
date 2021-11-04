@@ -79,7 +79,7 @@ char	*substr_word(char *str, const char *delims);
 void	free_array(char **arr);
 int		parse_redir(t_list *com, char ***env);
 int		do_redirects(int type, char *file, t_list *com, char ***env);
-int		do_command(t_list *command, char ***env);
+int		do_command(int is_p, t_list *command, char ***env);
 int		do_builtins(char **arr, char ***env, t_list *com);
 int		is_builtin(char *line);
 int		do_pipes(t_list *com, t_command *next, char ***env);

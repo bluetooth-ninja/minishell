@@ -60,7 +60,7 @@ int	do_double_left_redirect(char *file, t_list *com, char ***env)
 		dup2(fd[0], 0);
 		close(fd[1]);
 		wait(NULL);
-		res = do_command(com, env);
+		res = do_command(0, com, env);
 		close(fd[0]);
 		exit(res);
 	}

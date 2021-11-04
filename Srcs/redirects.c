@@ -29,7 +29,7 @@ static int	do_right_redirect(char *file, t_list *com, char ***env)
 	}
 	dup2(fd, 1);
 	close(fd);
-	res = do_command(com, env);
+	res = do_command(0, com, env);
 	return (res);
 }
 
@@ -50,7 +50,7 @@ static int	do_left_redirect(char *file, t_list *com, char ***env)
 	}
 	dup2(fd, 0);
 	close(fd);
-	res = do_command(com, env);
+	res = do_command(0, com, env);
 	return (res);
 }
 
@@ -71,7 +71,7 @@ static int	do_double_right_redirect(char *file, t_list *com, char ***env)
 	}
 	dup2(fd, 1);
 	close(fd);
-	res = do_command(com, env);
+	res = do_command(0, com, env);
 	return (res);
 }
 

@@ -16,30 +16,40 @@ static void	do_proccess(t_list *com, t_command *next, char ***env)
 {
 	int			res;
 	t_command	*cur;
+	t_list		*exec_com;
 
 	cur = com->content;
 	res = 0;
-	dup2(next->fd[1], 1);
-	close(next->fd[1]);
-	if (cur->fd[0] != 0)
-	{
+	if (cur->fd[0])
 		dup2(cur->fd[0], 0);
-		close(cur->fd[0]);
-	}
-	res = do_command(com, env);
+	dup2(next->fd[1], 1);
+	exec_com = (t_list *)ft_calloc(1, sizeof(t_list));
+	exec_com->content = com->content;
+	res = do_command(0, com, env);
+	free(exec_com);
 	exit(res);
 }
 
 int	do_pipes(t_list *com, t_command *next, char ***env)
 {
+	pid_t	pid;
 	int		status;
 
 	if (pipe(next->fd) == -1)
-		return (-1);
-	if (fork() == 0)
+		return (ERR_CODE);
+	status = 0;
+	pid = fork();
+	if (pid < 0)
+		return (ERR_CODE);
+	if (pid == 0)
+	{
 		do_proccess(com, next, env);
-	wait(&status);
-	return (0);
+		exit(0);
+	}
+	close(next->fd[1]);
+	waitpid(pid, &status, 0);
+	g_sh_exit = WEXITSTATUS(status);
+	return (status);
 }
 
 static int	add_commands(t_list **commands, char *com_line, int com_len)
@@ -58,7 +68,7 @@ static int	add_commands(t_list **commands, char *com_line, int com_len)
 	if (!tmp)
 		return (ERR_CODE);
 	trim_com = tmp;
-	new_com = (t_command *)malloc(sizeof(t_command));
+	new_com = (t_command *)ft_calloc(1, sizeof(t_command));
 	if (!new_com)
 	{
 		free(trim_com);

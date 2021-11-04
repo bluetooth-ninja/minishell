@@ -37,7 +37,7 @@ static int	command_execve(char **arr, char **env)
 	return (WEXITSTATUS(status));
 }
 
-int	do_command(t_list *command, char ***env)
+int	do_com(t_list *command, char ***env)
 {
 	char	**arr;
 	int		res;
@@ -63,6 +63,28 @@ int	do_command(t_list *command, char ***env)
 		g_sh_exit = command_execve(arr, *env);
 	free_array(arr);
 	return (g_sh_exit);
+}
+
+int	do_command(int is_p, t_list *command, char ***env)
+{
+	pid_t	pid;
+	int		status;
+
+	if (is_p)
+	{
+		pid = fork();
+		if (pid < 0)
+			return (ERR_CODE);
+		if (pid == 0)
+		{
+			dup2(((t_command *)(command->content))->fd[0], 0);
+			do_com(command, env);
+		}
+		waitpid(pid, &status, 0);
+	}
+	else
+		status = do_com(command, env);
+	return (status);
 }
 
 static int	ifempty(t_list **commands)
@@ -93,14 +115,19 @@ static int	ifempty(t_list **commands)
 static int	do_commands(t_list *commands, char ***env)
 {
 	int	res;
+	int	is_p;
 
+	is_p = 0;
 	res = 0;
 	while (commands)
 	{
 		if (!commands->next)
-			res = do_command(commands, env);
+			res = do_command(is_p, commands, env);
 		else
-			res = do_pipes(commands->content, commands->next->content, env);
+		{
+			res = do_pipes(commands, commands->next->content, env);
+			is_p = 1;
+		}
 		commands = commands->next;
 	}
 	return (res);
