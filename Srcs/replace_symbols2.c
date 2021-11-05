@@ -22,13 +22,10 @@ char	*take_value(char *str, char **env, int *len)
 	i = 1;
 	*len = 2;
 	n_str = ft_strchr(str, '$');
-	if (!ft_isalpha(str[1]) && str[1] != '_')
-	{
-		if (str[1] == '?')
-			return (search_env_value("?", (const char **)env));
-		else
-			return (ft_strdup(""));
-	}
+	if (!ft_isalpha(str[1]) && str[1] != '_' && str[1] == '?')
+		return (search_env_value("?", (const char **)env));
+	else if (!ft_isalpha(str[1]) && str[1] != '_')
+		return (ft_strdup(""));
 	while (n_str[++i] && (ft_isalnum(n_str[i]) || n_str[i] == '_'))
 		(*len)++;
 	name = (char *)ft_calloc(*len, sizeof(char));
@@ -48,14 +45,11 @@ char	*change_name_to_value(char **str, char *new_str, char *value, int j)
 	int		i;
 	char	*t_str;
 
-	t_str = *str;
+	t_str = *str - 1;
 	name = ft_strchr(&t_str[j], '$');
 	i = 0;
-	while (*t_str && t_str != name)
-	{
+	while (*(++t_str) && t_str != name)
 		new_str[i++] = *t_str;
-		t_str++;
-	}
 	while (*value)
 		new_str[i++] = *value++;
 	t_str++;
@@ -67,10 +61,8 @@ char	*change_name_to_value(char **str, char *new_str, char *value, int j)
 	}
 	else if (*t_str)
 		t_str++;
-	while (*t_str)
-	{
+	t_str--;
+	while (*(++t_str))
 		new_str[i++] = *t_str;
-		t_str++;
-	}
 	return (new_str);
 }
