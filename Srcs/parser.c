@@ -6,85 +6,66 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/03 18:52:04 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/05 04:16:20 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	command_execve(char **arr, char **env)
+static int	add_commands(t_list **commands, char *com_line, int com_len)
 {
-	pid_t	pid;
-	int		res;
-	int		status;
+	t_list		*new_el;
+	char		*trim_com;
+	char		*tmp;
+	t_command	*new_com;
 
-	res = 0;
-	pid = fork();
-	if (pid == -1)
+	trim_com = (char *)ft_calloc(com_len + 1, sizeof(char));
+	if (!trim_com)
 		return (ERR_CODE);
-	if (pid == 0)
-	{
-		if (!ft_strchr(arr[0], '/'))
-			res = find_path(arr, env);
-		if (res == ERR_CODE)
-			exit(ERR_CODE);
-		res = execve(arr[0], arr, env);
-		if (res == -1)
-			execve_err(arr[0]);
-		exit(res);
-	}
-	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	ft_strlcpy(trim_com, com_line, com_len + 1);
+	tmp = ft_strtrim(trim_com, "\t ");
+	free(trim_com);
+	if (!tmp)
+		return (ERR_CODE);
+	trim_com = tmp;
+	new_com = (t_command *)ft_calloc(1, sizeof(t_command));
+	if (!new_com)
+		return (pars_err(trim_com, new_com));
+	new_com->text = trim_com;
+	new_el = ft_lstnew(new_com);
+	if (!new_el)
+		return (pars_err(trim_com, new_com));
+	ft_lstadd_back(commands, new_el);
+	return (0);
 }
 
-int	do_com(t_list *command, char ***env)
+t_list	*pipe_split(char *line)
 {
-	char	**arr;
-	int		res;
-	char	**str;
+	t_list	*commands;
+	int		i;
+	int		is_q;
+	int		start;
 
-	str = &(((t_command *)(command->content))->text);
-	if (ft_strchrq(*str, '>') || ft_strchrq(*str, '<'))
-		return (parse_redir(command, env));
-	res = do_hast_quotes(str, *env);
-	if (res)
+	start = 0;
+	i = -1;
+	commands = 0;
+	is_q = 0;
+	while (line[++i])
 	{
-		if (res == ERR_CODE)
-			return (ERR_CODE);
-		else
-			return (2);
-	}
-	arr = space_split(*str);
-	if (!arr)
-		return (ERR_CODE);
-	if (arr[0] && is_builtin(arr[0]))
-		g_sh_exit = do_builtins(arr, env, command);
-	else if (arr[0])
-		g_sh_exit = command_execve(arr, *env);
-	free_array(arr);
-	return (g_sh_exit);
-}
-
-int	do_command(int is_p, t_list *command, char ***env)
-{
-	pid_t	pid;
-	int		status;
-
-	if (is_p)
-	{
-		pid = fork();
-		if (pid < 0)
-			return (ERR_CODE);
-		if (pid == 0)
+		if ((line[i] == '\'' && is_q == 1) || (line[i] == '\"' && is_q == 2))
+			is_q = 0;
+		else if (line[i] == '\'' && !is_q)
+			is_q = 1;
+		else if (line[i] == '\"' && !is_q)
+			is_q = 2;
+		else if (line[i] == '|' && !is_q)
 		{
-			dup2(((t_command *)(command->content))->fd[0], 0);
-			do_com(command, env);
+			add_commands(&commands, &line[start], i - start);
+			start = i + 1;
 		}
-		waitpid(pid, &status, 0);
 	}
-	else
-		status = do_com(command, env);
-	return (status);
+	add_commands(&commands, &line[start], i - start);
+	return (commands);
 }
 
 static int	ifempty(t_list **commands)

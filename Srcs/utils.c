@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 20:56:23 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/03 20:11:52 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/05 04:09:21 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,13 @@ int	env_cpy(char ***my_env, char **env)
 		i--;
 	}
 	return (0);
+}
+
+int	pars_err(char *trim_com, t_command *new_com)
+{
+	if (trim_com)
+		free(trim_com);
+	if (new_com)
+		free(new_com);
+	return (ERR_CODE);
 }
