@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:39 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 01:26:18 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ static int	do_change_env_var(const char *name, const char *value, char ***env)
 	return (res);
 }
 
+static int	cd_err(char *tmp)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	g_sh_exit = 1;
+	if (tmp)
+		free(tmp);
+	return (1);
+}
+
 int	do_cd(t_list *line_element, char ***env)
 {
 	char	*tmp;
@@ -58,12 +68,7 @@ int	do_cd(t_list *line_element, char ***env)
 	if (res == 1)
 		return (ERR_CODE);
 	if (res)
-	{
-		ft_putendl_fd("minishell: cd: No such file or directory", 2);
-		g_sh_exit = 1;
-		free(tmp);
-		return (1);
-	}
+		return (cd_err(tmp));
 	res = do_change_env_var("OLDPWD=", tmp, env);
 	free(tmp);
 	if (res)

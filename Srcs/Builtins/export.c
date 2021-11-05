@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:48 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/02 02:52:53 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:39:34 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	do_export(t_list *line_element, char ***env)
 	if (line_element)
 		res = export(line_element, env);
 	else
-		res = do_env(*env);
+		res = do_env(*env, NULL);
 	return (res);
 }

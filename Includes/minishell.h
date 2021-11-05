@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/05 04:09:31 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:38:59 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		do_cd(t_list *line_element, char ***env);
 int		do_pwd(void);
 int		do_export(t_list *line_element, char ***env);
 int		do_unset(t_list *line_element, char ***env);
-int		do_env(char **env);
+int		do_env(char **env, char **arr);
 int		exit_shell(void);
 int		error_errno(void);
 t_list	*pipe_split(char *line);
