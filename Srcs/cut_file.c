@@ -58,6 +58,17 @@ static void	take_com(char **str, char *redir_p, char *endfile_p)
 	*str = com;
 }
 
+static char	*find_end(char *start)
+{
+	while (*start == '>' || *start == '<')
+		start++;
+	while (*start == ' ')
+		start++;
+	while (*start && *start != '<' && *start != '>' && *start != ' ')
+		start++;
+	return (start);
+}
+
 int	cut_file(char **str, char **file, int type, char **env)
 {
 	char	*redir_p;
@@ -68,12 +79,7 @@ int	cut_file(char **str, char **file, int type, char **env)
 		redir_p = ft_strchrq(*str, '>');
 	else
 		redir_p = ft_strchrq(*str, '<');
-	endfile_p = redir_p;
-	while (*endfile_p == '>' || *endfile_p == '<')
-		endfile_p++;
-	while (*endfile_p == ' ')
-		endfile_p++;
-	endfile_p = ft_strchrq(endfile_p, ' ');
+	endfile_p = find_end(redir_p);
 	if (endfile_p == 0)
 		endfile_p = redir_p + ft_strlen(redir_p);
 	res = take_file(file, redir_p, endfile_p, env);
