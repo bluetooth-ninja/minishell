@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	replace_variables(char **str, char **env)
+static int	replace_variables(char **str, char **env, int i)
 {
 	int		len;
 	char	*new_str;
@@ -21,7 +21,7 @@ int	replace_variables(char **str, char **env)
 
 	start = *str;
 	len = 0;
-	value = take_value(*str, env, &len);
+	value = take_value(&((*str)[i]), env, &len);
 	if (!value)
 		return (ERR_CODE);
 	new_str = ft_calloc(ft_strlen(*str) - len + ft_strlen(value) + 1,
@@ -31,7 +31,7 @@ int	replace_variables(char **str, char **env)
 		free(value);
 		return (ERR_CODE);
 	}
-	*str = change_name_to_value(str, new_str, value);
+	*str = change_name_to_value(str, new_str, value, i);
 	free(start);
 	free(value);
 	return (0);
@@ -56,7 +56,7 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 			*is_q = 0;
 		else if ((*str)[i] == '$' && *is_q != 1)
 		{
-			res = replace_variables(str, env);
+			res = replace_variables(str, env, i);
 			i--;
 		}
 		else
