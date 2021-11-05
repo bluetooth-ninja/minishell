@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:34:55 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 00:36:36 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	do_builtins(char **arr, char ***env, t_list *com)
 	else if (!ft_memcmp(arr[0], "cd", 3))
 		i = do_cd(words, env);
 	else if (!ft_memcmp(arr[0], "env", 4))
-		i = do_env(*env);
+		i = do_env(*env, arr);
 	else if (!ft_memcmp(arr[0], "exit", 5))
 		i = do_exit(arr, words, com, env);
 	else if (!ft_memcmp(arr[0], "export", 7))
