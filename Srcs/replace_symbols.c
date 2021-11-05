@@ -54,7 +54,8 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 			*is_q = 0;
 		else if ((*str)[i] == '\'' && *is_q == 1)
 			*is_q = 0;
-		else if ((*str)[i] == '$' && *is_q != 1)
+		else if ((*str)[i] == '$' && (ft_isalnum((*str)[i + 1])
+				|| (*str)[i + 1] == '?') && *is_q != 1)
 		{
 			res = replace_variables(str, env, i);
 			i--;
