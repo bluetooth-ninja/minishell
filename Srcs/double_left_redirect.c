@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	do_double_left_child(char *file, int fd0, int fd)
+static void	do_double_left_child(char *file, int fd0, int fd)
 {
 	int		len;
 	char	*line;
@@ -41,14 +41,11 @@ void	do_double_left_child(char *file, int fd0, int fd)
 	exit(EXIT_SUCCESS);
 }
 
-int	do_double_left_redirect(char *file, t_list *com, char ***env)
+int	double_left_redirect(char *file, t_list *com, char ***env, int fd[2])
 {
 	int		res;
-	int		fd[2];
 	pid_t	pid;
 
-	if (pipe(fd) == -1)
-		return (ERR_CODE);
 	res = 0;
 	pid = fork();
 	if (pid < 0)
@@ -62,7 +59,15 @@ int	do_double_left_redirect(char *file, t_list *com, char ***env)
 		wait(NULL);
 		res = do_command(0, com, env);
 		close(fd[0]);
-		exit(res);
 	}
 	return (res);
+}
+
+int	do_double_left_redirect(char *file, t_list *com, char ***env)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		return (ERR_CODE);
+	return (double_left_redirect(file, com, env, fd));
 }

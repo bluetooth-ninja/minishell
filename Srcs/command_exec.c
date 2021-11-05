@@ -78,7 +78,8 @@ int	do_command(int is_p, t_list *command, char ***env)
 			return (ERR_CODE);
 		if (pid == 0)
 		{
-			dup2(((t_command *)(command->content))->fd[0], 0);
+			if (find_type(((t_command *)(command->content))->text) != DL_RDR)
+				dup2(((t_command *)(command->content))->fd[0], 0);
 			res = do_com(command, env);
 			exit(res);
 		}

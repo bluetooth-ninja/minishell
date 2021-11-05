@@ -12,12 +12,14 @@
 
 #include "minishell.h"
 
-static int	find_type(char *str)
+int	find_type(char *str)
 {
 	char	*tmp;
 
 	tmp = ft_strchrq(str, '<');
 	str = ft_strchrq(str, '>');
+	if (!tmp && !str)
+		return (0);
 	if ((tmp < str && tmp) || !str)
 		str = tmp;
 	if (str[0] == '>' && str[1] != '<' && str[1] != '>')
