@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:53 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/02 02:51:38 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 01:11:13 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	do_unset(t_list *line_element, char ***env)
 		}
 		else
 		{
-			ft_putstr_fd("minishell: export: «", 2);
+			ft_putstr_fd("minishell: unset: «", 2);
 			ft_putstr_fd(line_element->content, 2);
 			ft_putendl_fd("»: wrong input", 2);
 			g_sh_exit = 1;
