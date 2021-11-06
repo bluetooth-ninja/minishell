@@ -90,7 +90,7 @@ void	free_list(t_list *lst);
 char	*change_name_to_value(char **str, char *new_str, char *value, int i);
 char	*take_value(char *str, char **env, int *len);
 int		find_path(char **path, char **env);
-int		double_left_redirect(char *file, t_list *com, char ***env, int fd[2]);
+void	do_double_left_child(char *file, int fd0, int fd);
 int		do_double_left_redirect(char *file, t_list *com, char ***env);
 void	execve_err(char *str);
 int		pars_err(char *trim_com, t_command *new_com);

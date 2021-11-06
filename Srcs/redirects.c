@@ -82,10 +82,6 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 	pid_t	pid;
 
 	res = 0;
-	if (type == DL_RDR)
-		res = do_double_left_redirect(file, com, env);
-	if (type == DL_RDR)
-		return (res);
 	pid = fork();
 	if (pid == -1)
 		return (ERR_CODE);
@@ -97,6 +93,8 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 			res = do_left_redirect(file, com, env);
 		else if (type == DR_RDR)
 			res = do_double_right_redirect(file, com, env);
+		else if (type == DL_RDR)
+			res = do_double_left_redirect(file, com, env);
 		exit(res);
 	}
 	waitpid(pid, &status, 0);

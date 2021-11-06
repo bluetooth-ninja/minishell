@@ -30,6 +30,43 @@ static void	do_proccess(t_list *com, t_command *next, char ***env)
 	exit(res);
 }
 
+static void	main_dl_rdr(t_list *com, char ***env)
+{
+	pid_t	pid;
+	int		res;
+
+	dup2(fd[0], 0);
+	close(fd[1]);
+	wait(NULL);
+	pid = fork();
+	if (pid < 0)
+		return (ERR_CODE);
+	if (pid == 0)
+	{
+		dup2(res_fd[1], 1);
+		res = do_command(0, com, env);
+		exit(res);
+	}
+	close(fd[0]);
+}
+
+static int	double_left_redirect(char *file, t_list *com, char ***env, int res_fd[2])
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
+		return (ERR_CODE);
+	pid = fork();
+	if (pid < 0)
+		return (ERR_CODE);
+	if (pid == 0)
+		do_double_left_child(file, fd[0], fd[1]);
+	else
+		main_dl_rdr(com, env);
+	return (0);
+}
+
 static void	pipe_double_left_redirect(t_list *com, char ***env, int fd[2])
 {
 	char		*file;

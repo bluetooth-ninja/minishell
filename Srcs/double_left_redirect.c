@@ -6,13 +6,13 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 03:33:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/05 21:53:16 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/05 04:32:36 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	do_double_left_child(char *file, int fd0, int fd)
+void	do_double_left_child(char *file, int fd0, int fd)
 {
 	int		len;
 	char	*line;
@@ -41,11 +41,14 @@ static void	do_double_left_child(char *file, int fd0, int fd)
 	exit(EXIT_SUCCESS);
 }
 
-int	double_left_redirect(char *file, t_list *com, char ***env, int fd[2])
+int	do_double_left_redirect(char *file, t_list *com, char ***env)
 {
 	int		res;
+	int		fd[2];
 	pid_t	pid;
 
+	if (pipe(fd) == -1)
+		return (ERR_CODE);
 	res = 0;
 	pid = fork();
 	if (pid < 0)
@@ -61,13 +64,4 @@ int	double_left_redirect(char *file, t_list *com, char ***env, int fd[2])
 		close(fd[0]);
 	}
 	return (res);
-}
-
-int	do_double_left_redirect(char *file, t_list *com, char ***env)
-{
-	int	fd[2];
-
-	if (pipe(fd) == -1)
-		return (ERR_CODE);
-	return (double_left_redirect(file, com, env, fd));
 }
