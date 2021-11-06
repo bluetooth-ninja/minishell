@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:23:52 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/03 22:36:44 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 17:52:45 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	read_lines(char ***env)
 	res = 0;
 	while (res != ERR_CODE)
 	{
-		line = readline("\x1b[1;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
+		line = readline("\x1b[0;30;43m♡❤(„• ᴗ •„)❤♡:\x1b[0m ");
 		if (line == NULL)
 			exit(g_sh_exit);
 		if (ft_strlen(line) > 0)

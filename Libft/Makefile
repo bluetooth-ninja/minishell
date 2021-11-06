@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wgaunt <wgaunt@student.42.fr>              +#+  +:+       +#+         #
+#    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/18 04:46:05 by vlucilla          #+#    #+#              #
-#    Updated: 2021/10/26 14:12:31 by wgaunt           ###   ########.fr        #
+#    Updated: 2021/11/06 18:12:43 by vlucilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,28 +22,26 @@ SRCS                    =       ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putcha
                                         ft_lstnew.c ft_lstsize.c ft_lstmap.c
 
 OBJS				= $(SRCS:.c=.o)
-
-HEADER				= ./
+DEPS 				= $(SRCS:.c=.d)
 
 CC					= gcc
-
 RM					= rm -f
-
 CFLAGS				= -Wall -Wextra -Werror
-
-.c.o:
-					@$(CC) $(CFLAGS) -I$(HEADER) -c $< -o $@
+CPPFLAGS 			= -MMD -I./
 
 NAME				= libft.a
 
 all:				$(NAME)
 
-$(NAME):			$(OBJS)
+$(NAME):			$(OBJS) Makefile
 				@ar rcs $(NAME) $(OBJS)
-				@printf "\e[37;5;41m             Libft is compiling...              \e[0m\n"
 
+-include $(DEPS)
+
+.c.o:
+				@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@ 
 clean:
-				@$(RM) $(OBJS)
+				@$(RM) $(OBJS) $(DEPS)
 
 fclean:			clean
 				@$(RM) $(NAME)
