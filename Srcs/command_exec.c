@@ -81,8 +81,10 @@ int	do_command(int is_p, t_list *command, char ***env)
 			if (find_type(((t_command *)(command->content))->text) != DL_RDR)
 				dup2(((t_command *)(command->content))->fd[0], 0);
 			res = do_com(command, env);
+			close(((t_command *)(command->content))->fd[0]);
 			exit(res);
 		}
+		close(((t_command *)(command->content))->fd[0]);
 		waitpid(pid, &status, 0);
 		status = WEXITSTATUS(status);
 	}

@@ -18,6 +18,7 @@ static void	do_proccess(t_list *com, t_command *next, char ***env)
 	t_command	*cur;
 	t_list		*exec_com;
 
+	close(next->fd[0]);
 	cur = com->content;
 	res = 0;
 	if (cur->fd[0])
@@ -26,6 +27,9 @@ static void	do_proccess(t_list *com, t_command *next, char ***env)
 	exec_com = (t_list *)ft_calloc(1, sizeof(t_list));
 	exec_com->content = com->content;
 	res = do_command(0, com, env);
+	if (cur->fd[0])
+		close(cur->fd[0]);
+	close(next->fd[1]);
 	free(exec_com);
 	exit(res);
 }
@@ -46,11 +50,13 @@ static int	main_dl_rdr(t_list *com, char ***env, int res_fd[2], int fd[2])
 	{
 		dup2(res_fd[1], 1);
 		res = do_command(0, com, env);
+		close(res_fd[1]);
+		close(fd[0]);
 		exit(res);
 	}
 	waitpid(pid, &res, 0);
 	close(fd[0]);
-	return (res);
+	return (WEXITSTATUS(res));
 }
 
 static int	double_left_redirect(char *file, t_list *com,
@@ -78,12 +84,17 @@ static void	pipe_double_left_redirect(t_list *com, char ***env, int fd[2])
 	t_command	*cur;
 	int			res;
 
+	close(fd[0]);
 	cur = com->content;
 	res = cut_file(&(cur->text), &file, DL_RDR, *env);
 	if (res)
+	{
+		close(fd[1]);
 		exit(res);
+	}
 	res = double_left_redirect(file, com, env, fd);
 	free(file);
+	close(fd[1]);
 	exit(res);
 }
 
@@ -108,6 +119,8 @@ int	do_pipes(t_list *com, t_command *next, char ***env)
 			do_proccess(com, next, env);
 	}
 	close(next->fd[1]);
+	if (cur->fd[0])
+		close(cur->fd[0]);
 	waitpid(pid, &status, 0);
-	return (status);
+	return (WEXITSTATUS(status));
 }
