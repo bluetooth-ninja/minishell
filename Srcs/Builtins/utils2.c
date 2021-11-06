@@ -62,14 +62,13 @@ int	is_correct_var(char *str, int can_eq)
 	i = 1;
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (0);
-	while (str[i])
+	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-		{
-			if (!can_eq || (can_eq && str[i] != '='))
-				return (0);
-		}
+			return (0);
 		i++;
 	}
+	if (str[i] == '=' && !can_eq)
+		return (0);
 	return (1);
 }

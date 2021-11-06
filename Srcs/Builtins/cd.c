@@ -60,6 +60,11 @@ int	do_cd(t_list *line_element, char ***env)
 	char	*tmp;
 	int		res;
 
+	if (line_element && line_element->next)
+	{
+		ft_putendl_fd("minishell: cd: Too many arguments", 2);
+		return (1);
+	}
 	tmp = getcwd(0, 0);
 	if (line_element && ft_strncmp(line_element->content, "~", 2))
 		res = chdir((char *)line_element->content);
