@@ -53,7 +53,8 @@ static int	main_dl_rdr(t_list *com, char ***env, int res_fd[2], int fd[2])
 	return (res);
 }
 
-static int	double_left_redirect(char *file, t_list *com, char ***env, int res_fd[2])
+static int	double_left_redirect(char *file, t_list *com,
+		char ***env, int res_fd[2])
 {
 	int		fd[2];
 	pid_t	pid;

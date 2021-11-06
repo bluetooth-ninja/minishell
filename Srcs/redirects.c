@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 17:13:52 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/03 18:08:05 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/06 14:45:34 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 	}
 	waitpid(pid, &status, 0);
 	g_sh_exit = WEXITSTATUS(status);
-	return (res);
+	return (WEXITSTATUS(status));
 }
