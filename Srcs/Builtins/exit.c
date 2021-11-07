@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/06 17:55:22 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:33:03 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ static void	free_exit(t_list *words, t_list *com, char ***env)
 	free(env);
 }
 
+static int	exit_ret(void)
+{
+	ft_putendl_fd("exit", 2);
+	ft_putendl_fd("minishell: exit: too many arguments", 2);
+	return (1);
+}
+
 int	do_exit(char **arr, t_list *words, t_list *com, char ***env)
 {
 	int	nb;
@@ -52,20 +59,24 @@ int	do_exit(char **arr, t_list *words, t_list *com, char ***env)
 	nb = 1;
 	while (arr[nb])
 		nb++;
-	free_exit(words, com, env);
 	if (nb == 1)
+	{
+		free_exit(words, com, env);
 		ft_exit(NULL, 0, arr);
+	}
 	if (nb == 2 && is_digits(arr[1]))
 	{
 		if (ft_atoi(arr[1]) > 256)
 			g_sh_exit = ft_atoi(arr[1]) % 256;
 		else
 			g_sh_exit = ft_atoi(arr[1]);
+		free_exit(words, com, env);
 		ft_exit(NULL, 0, arr);
 	}
 	if (nb >= 2 && !is_digits(arr[1]))
+	{
+		free_exit(words, com, env);
 		ft_exit("minishell: exit: numeric argument required", 2, arr);
-	if (nb > 2 && (is_digits(arr[1])))
-		ft_exit("minishell: exit: too many arguments", 1, arr);
-	return (0);
+	}
+	return (exit_ret());
 }
