@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:39 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/06 01:26:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/08 02:04:04 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	cd_err(int res, char *tmp)
 	g_sh_exit = 1;
 	if (tmp)
 		free(tmp);
-	return (2);
+	return (1);
 }
 
 int	do_cd(t_list *line_element, char ***env)

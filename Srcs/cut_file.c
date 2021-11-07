@@ -75,7 +75,7 @@ static char	*find_end(char *start)
 		else if (!is_q && *start == '\"')
 			is_q = 2;
 		else if ((is_q == 2 && *start == '\"')
-				|| (is_q == 1 && *start == '\''))
+			|| (is_q == 1 && *start == '\''))
 			is_q = 0;
 		start++;
 	}

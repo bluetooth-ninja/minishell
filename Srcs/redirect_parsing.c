@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 20:19:47 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/03 00:39:09 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/08 01:15:41 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,21 @@ int	find_type(char *str)
 
 static int	result(int res)
 {
-	g_sh_exit = 2;
 	if (res == -2)
+	{
+		g_sh_exit = 2;
 		return (2);
+	}
+	if (res == -3)
+	{
+		g_sh_exit = 1;
+		ft_putendl_fd("minishell: ambiguous redirect", 2);
+		return (1);
+	}
 	return (ERR_CODE);
 }
 
-static void	error_for_rita(char *file)
+static int	error_for_rita(char *file)
 {
 	if (*file)
 	{
@@ -55,6 +63,9 @@ static void	error_for_rita(char *file)
 		ft_putendl_fd("minishell: No such file or directory", 2);
 		g_sh_exit = 1;
 	}
+	if (file)
+		free(file);
+	return (g_sh_exit);
 }
 
 int	parse_redir(t_list *com, char ***env)
@@ -73,15 +84,10 @@ int	parse_redir(t_list *com, char ***env)
 		return (result(-2));
 	}
 	res = cut_file(str, &file, type, *env);
-	if (res == -3)
-		ft_putendl_fd("minishell: ambiguous redirect", 2);
-	if (res == -3)
-		return (2);
-	printf("%s\n", file);
 	if (res)
 		return (result(res));
 	if (!(*file) || *file == '<' || *file == '>')
-		error_for_rita(file);
+		return (error_for_rita(file));
 	else
 		res = do_redirects(type, file, com, env);
 	free(file);

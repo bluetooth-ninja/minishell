@@ -6,7 +6,7 @@
 #    By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/16 16:22:11 by wgaunt            #+#    #+#              #
-#    Updated: 2021/11/06 18:18:13 by vlucilla         ###   ########.fr        #
+#    Updated: 2021/11/08 02:15:10 by vlucilla         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFTPATH	= Libft/
 
 #RLFLAGS	= -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1.1/include -lreadline 
 CC			= 	gcc
-CFLAGS		= 	-Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS		= 	-Wall -Wextra -Werror #-fsanitize=address -g3
 CPPFLAGS 	= 	-MMD -I./Libft -I./Includes 
 RM			=	rm -f
 LIB			= 	-lreadline Libft/libft.a
