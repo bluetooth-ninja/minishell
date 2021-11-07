@@ -97,8 +97,8 @@ int	cut_file(char **str, char **file, int type, char **env)
 	if (endfile_p == 0)
 		endfile_p = redir_p + ft_strlen(redir_p);
 	res = take_file(file, redir_p, endfile_p, env);
-	tmp = *file;
-	while (*(tmp++))
+	tmp = *file - 1;
+	while (*(++tmp))
 		if (*tmp == 1)
 			*tmp = ' ';
 	if (res)
