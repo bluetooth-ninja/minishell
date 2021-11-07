@@ -24,7 +24,7 @@ LIBFTPATH	= Libft/
 
 #RLFLAGS	= -L/Users/$(USER)/.brew/Cellar/readline/8.1.1/lib/ -I/Users/$(USER)/.brew/Cellar/readline/8.1.1/include -lreadline 
 CC			= 	gcc
-CFLAGS		= 	-Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS		= 	-Wall -Wextra -Werror# -fsanitize=address -g3
 CPPFLAGS 	= 	-MMD -I./Libft -I./Includes 
 RM			=	rm -f
 LIB			= 	-lreadline Libft/libft.a
