@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wgaunt <wgaunt@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 19:26:11 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/24 16:49:33 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:52:22 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <minishell.h>
+#include "minishell.h"
 
 int	name_strncmp(const char *name, const char *var, int len)
 {

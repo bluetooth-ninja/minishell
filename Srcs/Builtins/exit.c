@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/07 15:33:03 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:46:02 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	ft_exit(char *str, int err, char **arr)
 	ft_putendl_fd(str, 2);
 	if (err == 1)
 		g_sh_exit = 1;
-	if (err == 2)
-		g_sh_exit = 2;
 	free_array(arr);
 	exit(g_sh_exit);
 }

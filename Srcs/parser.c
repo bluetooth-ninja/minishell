@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:13:46 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/05 04:16:20 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:55:01 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	add_commands(t_list **commands, char *com_line, int com_len)
 	return (0);
 }
 
-t_list	*pipe_split(char *line)
+static t_list	*pipe_split(char *line)
 {
 	t_list	*commands;
 	int		i;

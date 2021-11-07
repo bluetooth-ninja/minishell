@@ -6,12 +6,11 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 18:06:30 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/02 01:04:18 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:51:31 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
-#include <minishell.h>
+#include "minishell.h"
 
 char	*search_env_value(const char *name, const char **env)
 {

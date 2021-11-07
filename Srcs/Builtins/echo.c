@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlucilla <vlucilla@student.21-school.ru>   +#+  +:+       +#+        */
+/*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 17:23:43 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/10/24 16:57:20 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/07 15:50:21 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	check_option(t_list **list)
 	return (1);
 }
 
-void	print_n(int is_nl)
+static void	print_n(int is_nl)
 {
 	if (is_nl)
 		printf("\n");
