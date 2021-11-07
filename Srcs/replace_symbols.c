@@ -60,17 +60,14 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 			*is_q = 0;
 		else if ((*str)[i] == '$' && (ft_isalnum((*str)[i + 1])
 				|| (*str)[i + 1] == '_' || (*str)[i + 1] == '?') && *is_q != 1)
-		{
-			res = replace_variables(str, env, i, *is_q);
-			i--;
-		}
+			res = replace_variables(str, env, i--, *is_q);
 		else
 			(*len)++;
 	}
 	return (res);
 }
 
-static int	quotes_len_plus_var(char **str, char **env)
+static int	quotes_len_plus_var(char **str, char **env, int is_file)
 {
 	int	is_q;
 	int	res;
@@ -79,7 +76,7 @@ static int	quotes_len_plus_var(char **str, char **env)
 	len = 0;
 	is_q = 0;
 	res = function_action(str, &is_q, env, &len);
-	if (res == 1)
+	if (res == 1 && is_file)
 		return (-3);
 	if (res || !(*str))
 		return (ERR_CODE);
@@ -119,7 +116,7 @@ int	do_hast_quotes(char **str, char **env, int is_file)
 	char	*new_str;
 	int		len;
 
-	len = quotes_len_plus_var(str, env);
+	len = quotes_len_plus_var(str, env, is_file);
 	if (len == -2)
 	{
 		g_sh_exit = 2;
@@ -128,7 +125,7 @@ int	do_hast_quotes(char **str, char **env, int is_file)
 	}
 	if (len == ERR_CODE)
 		return (ERR_CODE);
-	if (len == -3 && is_file)
+	if (len == -3)
 		return (-3);
 	new_str = ft_calloc(len + 1, sizeof(char));
 	if (!new_str)
