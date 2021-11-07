@@ -12,14 +12,25 @@
 
 #include "minishell.h"
 
-static int	cd_home(char **env)
+static int	cd_home(char **env, t_list *path)
 {
 	char	*home;
+	char	*cd_path;
 	int		res;
 
 	home = search_env_value("HOME", (const char **)env);
 	if (!home)
 		return (1);
+	if (!home[0])
+		return (2);
+	if (path)
+	{
+		cd_path = ft_strjoin(home, &(((char *)(path->content))[1]));
+		free(home);
+		if (!cd_path)
+			return (1);
+		home = cd_path;
+	}
 	res = chdir(home);
 	free(home);
 	return (res);
@@ -45,14 +56,19 @@ static int	do_change_env_var(const char *name, const char *value, char ***env)
 	return (res);
 }
 
-static int	cd_err(char *tmp)
+static int	cd_err(int res, char *tmp)
 {
+	if (res == 2)
+	{
+		ft_putendl_fd("minishell: cd: cann't cd", 2);
+		return (2);
+	}
 	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putendl_fd(strerror(errno), 2);
 	g_sh_exit = 1;
 	if (tmp)
 		free(tmp);
-	return (1);
+	return (2);
 }
 
 int	do_cd(t_list *line_element, char ***env)
@@ -66,14 +82,14 @@ int	do_cd(t_list *line_element, char ***env)
 		return (1);
 	}
 	tmp = getcwd(0, 0);
-	if (line_element && ft_strncmp(line_element->content, "~", 2))
+	if (line_element && ((char *)(line_element->content))[0] != '~')
 		res = chdir((char *)line_element->content);
 	else
-		res = cd_home(*env);
+		res = cd_home(*env, line_element);
 	if (res == 1)
 		return (ERR_CODE);
 	if (res)
-		return (cd_err(tmp));
+		return (cd_err(res, tmp));
 	res = do_change_env_var("OLDPWD=", tmp, env);
 	free(tmp);
 	if (res)
