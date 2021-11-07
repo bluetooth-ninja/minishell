@@ -43,6 +43,20 @@ static int	result(int res)
 	return (ERR_CODE);
 }
 
+static void	error_for_rita(char *file)
+{
+	if (*file)
+	{
+		ft_putendl_fd("minishell: Syntax error", 2);
+		g_sh_exit = 2;
+	}
+	else
+	{
+		ft_putendl_fd("minishell: No such file or directory", 2);
+		g_sh_exit = 1;
+	}
+}
+
 int	parse_redir(t_list *com, char ***env)
 {
 	int		type;
@@ -59,13 +73,15 @@ int	parse_redir(t_list *com, char ***env)
 		return (result(-2));
 	}
 	res = cut_file(str, &file, type, *env);
+	if (res == -3)
+		ft_putendl_fd("minishell: ambiguous redirect", 2);
+	if (res == -3)
+		return (2);
+	printf("%s\n", file);
 	if (res)
 		return (result(res));
 	if (!(*file) || *file == '<' || *file == '>')
-	{
-		ft_putendl_fd("minishell: Syntax error", 2);
-		g_sh_exit = 2;
-	}
+		error_for_rita(file);
 	else
 		res = do_redirects(type, file, com, env);
 	free(file);

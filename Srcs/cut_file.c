@@ -14,7 +14,7 @@
 
 static int	quotes_for_rita(char **file, int res)
 {
-	if (res == -2)
+	if (res == -2 || res == -3)
 		free(*file);
 	return (res);
 }
@@ -44,7 +44,7 @@ static int	take_file(char **file, char *redir_p, char *endfile_p, char **env)
 	free(tmp);
 	if (!(*file))
 		return (ERR_CODE);
-	res = do_hast_quotes(file, env);
+	res = do_hast_quotes(file, env, 1);
 	return (res);
 }
 
@@ -60,12 +60,25 @@ static void	take_com(char **str, char *redir_p, char *endfile_p)
 
 static char	*find_end(char *start)
 {
+	int	is_q;
+
+	is_q = 0;
 	while (*start == '>' || *start == '<')
 		start++;
 	while (*start == ' ')
 		start++;
-	while (*start && *start != '<' && *start != '>' && *start != ' ')
+	while (*start && *start != '<' && *start != '>' && (*start != ' '
+			|| (*start == ' ' && is_q)))
+	{
+		if (!is_q && *start == '\'')
+			is_q = 1;
+		else if (!is_q && *start == '\"')
+			is_q = 2;
+		else if ((is_q == 2 && *start == '\"')
+				|| (is_q == 1 && *start == '\''))
+			is_q = 0;
 		start++;
+	}
 	return (start);
 }
 
@@ -74,6 +87,7 @@ int	cut_file(char **str, char **file, int type, char **env)
 	char	*redir_p;
 	char	*endfile_p;
 	int		res;
+	char	*tmp;
 
 	if (type == R_RDR || type == DR_RDR)
 		redir_p = ft_strchrq(*str, '>');
@@ -83,6 +97,10 @@ int	cut_file(char **str, char **file, int type, char **env)
 	if (endfile_p == 0)
 		endfile_p = redir_p + ft_strlen(redir_p);
 	res = take_file(file, redir_p, endfile_p, env);
+	tmp = *file;
+	while (*(tmp++))
+		if (*tmp == 1)
+			*tmp = ' ';
 	if (res)
 		return (quotes_for_rita(file, res));
 	take_com(str, redir_p, endfile_p);

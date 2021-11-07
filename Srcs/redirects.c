@@ -78,7 +78,6 @@ static int	do_double_right_redirect(char *file, t_list *com, char ***env)
 int	do_redirects(int type, char *file, t_list *com, char ***env)
 {
 	int		res;
-	int		status;
 	pid_t	pid;
 
 	res = 0;
@@ -97,7 +96,7 @@ int	do_redirects(int type, char *file, t_list *com, char ***env)
 			res = do_double_left_redirect(file, com, env);
 		exit(res);
 	}
-	waitpid(pid, &status, 0);
-	g_sh_exit = WEXITSTATUS(status);
-	return (WEXITSTATUS(status));
+	waitpid(pid, &res, 0);
+	g_sh_exit = WEXITSTATUS(res);
+	return (WEXITSTATUS(res));
 }

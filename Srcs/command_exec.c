@@ -46,7 +46,7 @@ int	do_com(t_list *command, char ***env)
 	str = &(((t_command *)(command->content))->text);
 	if (ft_strchrq(*str, '>') || ft_strchrq(*str, '<'))
 		return (parse_redir(command, env));
-	res = do_hast_quotes(str, *env);
+	res = do_hast_quotes(str, *env, 0);
 	if (res)
 	{
 		if (res == ERR_CODE)

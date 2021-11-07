@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	replace_variables(char **str, char **env, int i)
+static int	replace_variables(char **str, char **env, int i, int is_q)
 {
 	int		len;
 	char	*new_str;
@@ -24,8 +24,7 @@ static int	replace_variables(char **str, char **env, int i)
 	value = take_value(&((*str)[i]), env, &len);
 	if (!value)
 		return (ERR_CODE);
-	new_str = ft_calloc(ft_strlen(*str) - len + ft_strlen(value) + 1,
-			sizeof(char));
+	new_str = ft_calloc(ft_strlen(*str) - len + ft_strlen(value) + 1, 1);
 	if (!new_str)
 	{
 		free(value);
@@ -33,6 +32,11 @@ static int	replace_variables(char **str, char **env, int i)
 	}
 	*str = change_name_to_value(str, new_str, value, i);
 	free(start);
+	if ((ft_strchr(value, ' ') || !(*value)) && !is_q)
+	{
+		free(value);
+		return (1);
+	}
 	free(value);
 	return (0);
 }
@@ -55,9 +59,9 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 		else if ((*str)[i] == '\'' && *is_q == 1)
 			*is_q = 0;
 		else if ((*str)[i] == '$' && (ft_isalnum((*str)[i + 1])
-				|| (*str)[i + 1] == '?') && *is_q != 1)
+				|| (*str)[i + 1] == '_' || (*str)[i + 1] == '?') && *is_q != 1)
 		{
-			res = replace_variables(str, env, i);
+			res = replace_variables(str, env, i, *is_q);
 			i--;
 		}
 		else
@@ -75,6 +79,8 @@ static int	quotes_len_plus_var(char **str, char **env)
 	len = 0;
 	is_q = 0;
 	res = function_action(str, &is_q, env, &len);
+	if (res == 1)
+		return (-3);
 	if (res || !(*str))
 		return (ERR_CODE);
 	if (is_q)
@@ -108,7 +114,7 @@ static void	new_str_create(char **str, char *new_str, int len)
 	}
 }
 
-int	do_hast_quotes(char **str, char **env)
+int	do_hast_quotes(char **str, char **env, int is_file)
 {
 	char	*new_str;
 	int		len;
@@ -122,6 +128,8 @@ int	do_hast_quotes(char **str, char **env)
 	}
 	if (len == ERR_CODE)
 		return (ERR_CODE);
+	if (len == -3 && is_file)
+		return (-3);
 	new_str = ft_calloc(len + 1, sizeof(char));
 	if (!new_str)
 		return (ERR_CODE);

@@ -82,7 +82,7 @@ int		do_command(int is_p, t_list *command, char ***env);
 int		do_builtins(char **arr, char ***env, t_list *com);
 int		is_builtin(char *line);
 int		do_pipes(t_list *com, t_command *next, char ***env);
-int		do_hast_quotes(char **str, char **env);
+int		do_hast_quotes(char **str, char **env, int is_file);
 int		cut_file(char **str, char **file, int type, char **env);
 int		find_type(char *str);
 void	free_list(t_list *lst);
