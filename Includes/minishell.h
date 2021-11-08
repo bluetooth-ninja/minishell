@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 16:25:01 by wgaunt            #+#    #+#             */
-/*   Updated: 2021/11/07 15:55:54 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/08 03:33:16 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/stat.h>
-# include <dirent.h>
 # include <errno.h>
-# include <sys/ioctl.h>
-# include <termios.h>
-# include <curses.h>
-# include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 

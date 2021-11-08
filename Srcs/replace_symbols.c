@@ -6,7 +6,7 @@
 /*   By: vlucilla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 00:33:15 by vlucilla          #+#    #+#             */
-/*   Updated: 2021/11/03 00:39:36 by vlucilla         ###   ########.fr       */
+/*   Updated: 2021/11/08 03:23:06 by vlucilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	function_action(char **str, int *is_q, char **env, int *len)
 
 	i = -1;
 	res = 0;
-	while (*str && (*str)[++i] && !res)
+	while (*str && (*str)[++i] && res != ERR_CODE)
 	{
 		if ((*str)[i] == '\'' && !(*is_q))
 			*is_q = 1;
@@ -78,7 +78,7 @@ static int	quotes_len_plus_var(char **str, char **env, int is_file)
 	res = function_action(str, &is_q, env, &len);
 	if (res == 1 && is_file)
 		return (-3);
-	if (res || !(*str))
+	if (res == ERR_CODE || !(*str))
 		return (ERR_CODE);
 	if (is_q)
 		return (-2);
